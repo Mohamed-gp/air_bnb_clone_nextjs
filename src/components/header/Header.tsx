@@ -13,6 +13,7 @@ const Header = () => {
         <RightHeader />
       </div>
     </header>
+
   );
 };
 export default Header;
