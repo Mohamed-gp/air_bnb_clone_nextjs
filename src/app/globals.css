@@ -5,5 +5,27 @@
 body {
   height: 100vh;
   position: relative;
-  background-color: rgba(255, 0, 0, 0.096);
+  /* background-color: rgba(255, 0, 0, 0.096); */
+}
+
+.animation-on-show div {
+  animation: animation-on-show 0.3s linear forwards;
+  -webkit-animation: animation-on-show 0.3s linear forwards;
+}
+
+@keyframes animation-on-show {
+  0% {
+    transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
 }

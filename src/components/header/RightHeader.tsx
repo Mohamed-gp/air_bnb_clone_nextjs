@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import { FaBars } from "react-icons/fa6";
-import AuthModel from "./AuthModel";
 import { useState } from "react";
-import RegisterModal from "../modals/RegisterModal";
+import RegisterModel from "../modals/RegisterModel";
+import AuthMenu from "./AuthMenu";
 
 const RightHeader = () => {
   const [menuisopen, setmenuisopen] = useState(false);
@@ -28,10 +28,18 @@ const RightHeader = () => {
               height={30}
             />
           </div>
-          <AuthModel menuisopen={menuisopen} setmenuisopen={setmenuisopen} registermodelisopen={registermodelisopen}  setregistermodelisopen={setregistermodelisopen} />
+          <AuthMenu
+            menuisopen={menuisopen}
+            setmenuisopen={setmenuisopen}
+            registermodelisopen={registermodelisopen}
+            setregistermodelisopen={setregistermodelisopen}
+          />
         </div>
       </div>
-      <RegisterModal />
+      <RegisterModel
+        registermodelisopen={registermodelisopen}
+        setregistermodelisopen={setregistermodelisopen}
+      />
     </>
   );
 };

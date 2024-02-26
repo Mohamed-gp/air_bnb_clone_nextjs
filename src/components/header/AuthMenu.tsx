@@ -3,17 +3,15 @@ import { useEffect } from "react";
 interface AuthModelProps {
   menuisopen: boolean;
   setmenuisopen: React.Dispatch<React.SetStateAction<boolean>>;
-  registermodelisopen: boolean,
+  registermodelisopen: boolean;
   setregistermodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AuthModel({
+export default function AuthMenu({
   menuisopen,
   setmenuisopen,
-  setregistermodelisopen
+  setregistermodelisopen,
 }: AuthModelProps) {
-
-
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -33,7 +31,12 @@ export default function AuthModel({
         <>
           <div className="auth-model absolute top-[55px]  py-3 rounded-2xl w-[160px] bg-white border-2 right-0 z-[11]">
             <ul className="flex flex-col gap-2">
-              <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500" onClick={() => {setregistermodelisopen(true)}}>
+              <li
+                className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500"
+                onClick={() => {
+                  setregistermodelisopen(true);
+                }}
+              >
                 Sign Up
               </li>
               <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
