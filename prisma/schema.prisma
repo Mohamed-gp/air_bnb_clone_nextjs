@@ -1,0 +1,42 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URI")
+}
+
+
+model User {
+  // prisma do not allow id to start with _ like mongo db so it map ..... the completion in the documentation
+  id String @default(auto()) @id @map("_id") @db.ObjectId
+  email String?
+  hashedPassword String? @unique
+  userName String
+  emailverfied DateTime?
+  image String
+  favoriteIds String[] @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  accounts Accont[]
+  listings Listing[]
+  reservations reservation[]
+} 
+
+model Account {
+  id String @default(auto()) @id @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  type String
+  provider String
+  providerAccountId String
+  refrechToken String? @db.String
+  accessToken String? @db.String
+  tokenType String
+  expire_at  Int?
+  scop String?
+  id_token String?
+  session_state String?
+}
