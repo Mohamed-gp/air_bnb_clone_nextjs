@@ -12,31 +12,45 @@ datasource db {
 
 model User {
   // prisma do not allow id to start with _ like mongo db so it map ..... the completion in the documentation
-  id String @default(auto()) @id @map("_id") @db.ObjectId
-  email String?
-  hashedPassword String? @unique
-  userName String
-  emailverfied DateTime?
-  image String
-  favoriteIds String[] @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String?
+  email String? @unique
+  emailVerified DateTime?
+  image String?
+  hashedPassword String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  accounts Accont[]
+  favoriteIds String[] @db.ObjectId
+  accounts Account[]
+  reservation Reservation[]
   listings Listing[]
-  reservations reservation[]
 } 
 
 model Account {
-  id String @default(auto()) @id @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   type String
   provider String
   providerAccountId String
   refrechToken String? @db.String
   accessToken String? @db.String
+  expireAt Int?
   tokenType String
-  expire_at  Int?
-  scop String?
-  id_token String?
-  session_state String?
+  scope String?
+  idToken String? @db.String
+  sessionState String?
+  user User @relation(fields: [userId],references: [id],onDelete : Cascade)
+  @@unique([provider,providerAccountId]) // unique combination of the two
 }
+
+model Listing{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  imageSrc String
+  
+}
+
+
+
+
