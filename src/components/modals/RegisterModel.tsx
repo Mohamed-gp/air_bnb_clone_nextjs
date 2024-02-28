@@ -41,9 +41,9 @@ const RegisterModel = ({
     if (password.trim() == "") {
       return toast.success("password musn't be empty");
     }
-    try {
-      const { data } = await axios.post("/hell");
-    } catch (error) {}
+    // try {
+    //   const { data } = await axios.post("/hell");
+    // } catch (error) {}
   };
   // states to get the values of the form
   const [username, setusername] = useState("");
@@ -78,7 +78,7 @@ const RegisterModel = ({
             <div className="relative">
               <input
                 value={email}
-                onChange={(e) => setemail(e.target)}
+                onChange={(e) => setemail(e.target.value)}
                 type="email"
                 name=""
                 id="email"
@@ -86,7 +86,9 @@ const RegisterModel = ({
               />
               <label
                 htmlFor="email"
-                className="absolute top-3 peer-focus:top-1 peer-focus:text-[10px] duration-500 left-3 text-[13px] opacity-50"
+                className={`absolute ${
+                  !email ? "" : "text-[10px] top-1 "
+                }  peer-focus:text-[10px] peer-focus:top-1 top-3 duration-500 left-3 text-[13px] opacity-50`}
               >
                 Email
               </label>
@@ -97,13 +99,15 @@ const RegisterModel = ({
                 type="text"
                 name=""
                 value={username}
-                onChange={(e) => setusername(e.target)}
+                onChange={(e) => setusername(e.target.value)}
                 id="username"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none rounded-md"
               />
               <label
                 htmlFor="username"
-                className="absolute peer-focus:text-[10px] peer-focus:top-1 top-3 duration-500 left-3 text-[13px] opacity-50"
+                className={`absolute ${
+                  !username ? "" : "text-[10px] top-1 "
+                }  peer-focus:text-[10px] peer-focus:top-1 top-3 duration-500 left-3 text-[13px] opacity-50`}
               >
                 Username
               </label>
@@ -114,20 +118,21 @@ const RegisterModel = ({
                 type="password"
                 name=""
                 value={password}
-                onChange={(e) => setpassword(e.target)}
+                onChange={(e) => setpassword(e.target.value)}
                 id="password"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none  rounded-md "
               />
               <label
                 htmlFor="password"
-                className="absolute peer-focus:text-[10px] peer-focus:top-1 top-3 left-3 text-[13px] duration-500 opacity-50 rounded-md"
+                className={`absolute ${
+                  !password ? "" : "text-[10px] top-1 "
+                }  peer-focus:text-[10px] peer-focus:top-1 top-3 duration-500 left-3 text-[13px] opacity-50`}
               >
                 Password
               </label>
             </div>
             <input
               type="submit"
-              value="Continue"
               className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
             />
           </form>

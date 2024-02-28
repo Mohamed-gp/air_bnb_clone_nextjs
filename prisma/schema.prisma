@@ -48,9 +48,30 @@ model Listing{
   title String
   description String
   imageSrc String
-  
+  createdAt String
+  category String
+  roomCount Int
+  bathrooomCount Int
+  guestCount Int
+  locationValue String
+  userId String @db.ObjectId
+  price Int
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  reservations Reservation[]
 }
 
+
+model Reservation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId 
+  listingId String @db.ObjectId
+  startDate DateTime
+  endDate DateTime
+  totalPrice Int
+  createdAt DateTime @default(now())
+  user User @relation(fields: [userId],references: [id],onDelete : Cascade)
+  listing Listing @relation(fields: [listingId],references: [id],onDelete: Cascade)
+}
 
 
 
