@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className} relative`}>
         <Header />
-        <ToastContainer position="top-center"  />
+        <ToastContainer position="top-center" />
         {children}
       </body>
     </html>

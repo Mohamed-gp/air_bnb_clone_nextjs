@@ -6,21 +6,21 @@ import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { error } from "console";
 
-interface RegisterModalProps {
-  registermodelisopen: boolean;
-  setregistermodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
+interface loginModalProps {
+  loginmodelisopen: boolean;
+  setloginmodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RegisterModel = ({
-  registermodelisopen,
-  setregistermodelisopen,
-}: RegisterModalProps) => {
+const LoginModel = ({
+  loginmodelisopen,
+  setloginmodelisopen,
+}: loginModalProps) => {
   // useEffect to hide the model when click outside the model
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.closest(".register-model") && registermodelisopen) {
-        setregistermodelisopen((prev) => false);
+      if (!target.closest(".login-model") && loginmodelisopen) {
+        setloginmodelisopen((prev) => false);
       }
     };
     document.addEventListener("click", handleClickOutside);
@@ -28,7 +28,7 @@ const RegisterModel = ({
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [registermodelisopen, setregistermodelisopen]);
+  }, [loginmodelisopen, setloginmodelisopen]);
 
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -49,10 +49,10 @@ const RegisterModel = ({
     };
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/signup",
+        "http://localhost:3000/auth/login",
         body
       );
-      if (response.status == 201) {
+      if (response.status == 200) {
         return toast.success(response.data.message);
       }
       return toast.error(response.data.message);
@@ -69,17 +69,17 @@ const RegisterModel = ({
     <>
       <div
         className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen ${
-          registermodelisopen ? "animation-on-show " : "hidden "
+          loginmodelisopen ? "animation-on-show " : "hidden "
         }`}
       >
         <div
-          className={`register-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}
+          className={`login-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}
         >
           <div className="relative py-4 border-b-[#0000003b]/10 border-b-2">
-            <p className="text-center font-bold text-sm">Register</p>
+            <p className="text-center font-bold text-sm">login</p>
             <FaX
               onClick={() => {
-                setregistermodelisopen(false);
+                setloginmodelisopen(false);
               }}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-[11px] opacity-60 cursor-pointer"
             />
@@ -107,25 +107,6 @@ const RegisterModel = ({
                 }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
               >
                 Email
-              </label>
-            </div>
-            {/* name */}
-            <div className="relative">
-              <input
-                type="text"
-                name=""
-                value={username}
-                onChange={(e) => setusername(e.target.value)}
-                id="username"
-                className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none rounded-md"
-              />
-              <label
-                htmlFor="username"
-                className={`absolute ${
-                  !username ? "text-[13px]  top-3   " : "text-[10px] top-1 "
-                }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
-              >
-                Username
               </label>
             </div>
             {/* email */}
@@ -175,4 +156,4 @@ const RegisterModel = ({
     </>
   );
 };
-export default RegisterModel;
+export default LoginModel;

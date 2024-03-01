@@ -1,19 +1,18 @@
 
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
-  url      = env("MONGO_URI")
+  url= env("MONGO_URI")
 }
 
 
 model User {
   // prisma do not allow id to start with _ like mongo db so it map ..... the completion in the documentation
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String?
+  username String
   email String? @unique
   emailVerified DateTime?
   image String?
@@ -72,6 +71,5 @@ model Reservation {
   user User @relation(fields: [userId],references: [id],onDelete : Cascade)
   listing Listing @relation(fields: [listingId],references: [id],onDelete: Cascade)
 }
-
 
 

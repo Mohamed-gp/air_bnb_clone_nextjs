@@ -4,10 +4,12 @@ import { FaBars } from "react-icons/fa6";
 import { useState } from "react";
 import RegisterModel from "../modals/RegisterModel";
 import AuthMenu from "./AuthMenu";
+import LoginModel from "../modals/LoginModel";
 
 const RightHeader = () => {
   const [menuisopen, setmenuisopen] = useState(false);
   const [registermodelisopen, setregistermodelisopen] = useState(false);
+  const [loginmodelisopen, setloginmodelisopen] = useState(false);
 
   return (
     <>
@@ -33,12 +35,19 @@ const RightHeader = () => {
             setmenuisopen={setmenuisopen}
             registermodelisopen={registermodelisopen}
             setregistermodelisopen={setregistermodelisopen}
+            loginmodelisopen={loginmodelisopen}
+            setloginmodelisopen={setloginmodelisopen}
+
           />
         </div>
       </div>
       <RegisterModel
         registermodelisopen={registermodelisopen}
         setregistermodelisopen={setregistermodelisopen}
+      />
+      <LoginModel
+        loginmodelisopen={loginmodelisopen}
+        setloginmodelisopen={setloginmodelisopen}
       />
     </>
   );

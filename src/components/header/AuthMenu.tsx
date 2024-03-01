@@ -5,12 +5,15 @@ interface AuthModelProps {
   setmenuisopen: React.Dispatch<React.SetStateAction<boolean>>;
   registermodelisopen: boolean;
   setregistermodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
+  loginmodelisopen: boolean;
+  setloginmodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function AuthMenu({
   menuisopen,
   setmenuisopen,
   setregistermodelisopen,
+  setloginmodelisopen,
 }: AuthModelProps) {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -39,7 +42,12 @@ export default function AuthMenu({
               >
                 Sign Up
               </li>
-              <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
+              <li
+                onClick={() => {
+                  setloginmodelisopen(true);
+                }}
+                className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500"
+              >
                 Login
               </li>
             </ul>
