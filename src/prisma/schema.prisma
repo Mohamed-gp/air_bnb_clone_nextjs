@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URI")
+}
+
+model User {
+  // prisma do not allow id to start with _ like mongo db so it map ..... the completion in the documentation
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  username       String
+  email          String?       @unique
+  emailVerified  Boolean?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  favoriteIds    String[]      @db.ObjectId
+  reservation    Reservation[]
+  listings       Listing[]
+}
+
+model Listing {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  description    String
+  imageSrc       String
+  createdAt      String
+  category       String
+  roomCount      Int
+  bathrooomCount Int
+  guestCount     Int
+  locationValue  String
+  userId         String        @db.ObjectId
+  price          Int
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations   Reservation[]
+  // wilaya         String
+}
+
+model Reservation {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  listingId  String   @db.ObjectId
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing    Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+// model Wilaya {
+//   id     String @id @default(auto()) @map("_id") @db.ObjectId
+//   name   String
+//   number Int
+// }

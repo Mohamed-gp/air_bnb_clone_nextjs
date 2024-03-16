@@ -4,31 +4,17 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
-import { error } from "console";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "@/redux/uiSlice/uiSlice";
+import { IRootState } from "@/redux/store";
+import { signIn } from "next-auth/react";
 
-interface RegisterModalProps {
-  registermodelisopen: boolean;
-  setregistermodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const RegisterModel = ({
-  registermodelisopen,
-  setregistermodelisopen,
-}: RegisterModalProps) => {
+const RegisterModel = () => {
+  const dispatch = useDispatch();
+  const registerModelIsOpen = useSelector(
+    (state: IRootState) => state.ui.registerModelIsOpen
+  );
   // useEffect to hide the model when click outside the model
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest(".register-model") && registermodelisopen) {
-        setregistermodelisopen((prev) => false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [registermodelisopen, setregistermodelisopen]);
 
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -49,13 +35,10 @@ const RegisterModel = ({
     };
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/signup",
+        "http://localhost:3000/api/auth/register",
         body
       );
-      if (response.status == 201) {
-        return toast.success(response.data.message);
-      }
-      return toast.error(response.data.message);
+      return toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
@@ -69,7 +52,7 @@ const RegisterModel = ({
     <>
       <div
         className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen ${
-          registermodelisopen ? "animation-on-show " : "hidden "
+          registerModelIsOpen ? "animation-on-show" : "hidden"
         }`}
       >
         <div
@@ -79,7 +62,7 @@ const RegisterModel = ({
             <p className="text-center font-bold text-sm">Register</p>
             <FaX
               onClick={() => {
-                setregistermodelisopen(false);
+                dispatch(uiActions.setRegisterModelIsOpen(false));
               }}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-[11px] opacity-60 cursor-pointer"
             />
@@ -153,13 +136,19 @@ const RegisterModel = ({
             />
           </form>
           <div className="flex flex-col gap-3 pb-8">
-            <button className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded">
+            <button
+              onClick={() => signIn("google")} // we obviosly need to use the next-auth signIn function with the provider we want we can use in the defualt of our website with credentials or with the providers we have configured in the next-auth options
+              className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded"
+            >
               Continue With Google
               <span className="absolute left-2 top-1/2 -translate-y-1/2 size-12 flex justify-center items-center">
                 <FcGoogle className="text-xl" />
               </span>
             </button>
-            <button className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded">
+            <button
+              onClick={() => signIn("github")}
+              className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded"
+            >
               Continue With Github
               <span className="absolute left-2 top-1/2 -translate-y-1/2 size-12 flex justify-center items-center">
                 <FaGithub className="text-xl" />

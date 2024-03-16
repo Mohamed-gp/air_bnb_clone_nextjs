@@ -1,7 +1,7 @@
 import { registerVerify } from "@/joi/joi";
 import { NextRequest, NextResponse } from "next/server";
-import { prismaClient } from "../../../../lib/dbClient";
 import { authBody } from "@/types/interfaces";
+import { prismaClient } from "@/lib/dbClient";
 import bcrypt from "bcrypt"
 
 export async function POST(req: NextRequest) {

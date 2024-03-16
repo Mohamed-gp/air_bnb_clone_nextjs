@@ -4,31 +4,20 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
-import { error } from "console";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "@/redux/uiSlice/uiSlice";
+import { IRootState } from "@/redux/store";
+import { signIn, useSession } from "next-auth/react";
 
-interface loginModalProps {
-  loginmodelisopen: boolean;
-  setloginmodelisopen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const LoginModel = ({
-  loginmodelisopen,
-  setloginmodelisopen,
-}: loginModalProps) => {
-  // useEffect to hide the model when click outside the model
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest(".login-model") && loginmodelisopen) {
-        setloginmodelisopen((prev) => false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [loginmodelisopen, setloginmodelisopen]);
+const LoginModel = () => {
+  const { data: session } = useSession();
+  if (session) {
+    console.log(session);
+  }
+  const dispatch = useDispatch();
+  const loginModelIsOpen = useSelector(
+    (state: IRootState) => state.ui.loginModelIsOpen
+  );
 
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -36,40 +25,32 @@ const LoginModel = ({
     if (email.trim() == "") {
       return toast.error("email musn't be empty");
     }
-    if (username.trim() == "") {
-      return toast.error("username musn't be empty");
-    }
     if (password.trim() == "") {
       return toast.error("password musn't be empty");
     }
     const body = {
       email,
-      username,
       password,
     };
     try {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        "http://localhost:3000/api/auth/login",
         body
       );
-      if (response.status == 200) {
-        return toast.success(response.data.message);
-      }
-      return toast.error(response.data.message);
+      toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     }
   };
   // states to get the values of the form
-  const [username, setusername] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   return (
     <>
       <div
         className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen ${
-          loginmodelisopen ? "animation-on-show " : "hidden "
+          loginModelIsOpen ? "animation-on-show " : "hidden"
         }`}
       >
         <div
@@ -79,7 +60,7 @@ const LoginModel = ({
             <p className="text-center font-bold text-sm">login</p>
             <FaX
               onClick={() => {
-                setloginmodelisopen(false);
+                dispatch(uiActions.setLoginModelIsOpen(false));
               }}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-[11px] opacity-60 cursor-pointer"
             />
@@ -88,7 +69,7 @@ const LoginModel = ({
             onSubmit={submitHandler}
             className="py-6 px-4 flex flex-col gap-2"
           >
-            <p className="font-bold">Welcome To Airbnb</p>
+            <p className="font-bold">Welcome Back</p>
             <p className="opacity-60 text-xs">Create an Account</p>
             {/* email */}
             <div className="relative">
@@ -134,13 +115,19 @@ const LoginModel = ({
             />
           </form>
           <div className="flex flex-col gap-3 pb-8">
-            <button className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded">
+            <button
+              onClick={() => signIn("google")}
+              className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded"
+            >
               Continue With Google
               <span className="absolute left-2 top-1/2 -translate-y-1/2 size-12 flex justify-center items-center">
                 <FcGoogle className="text-xl" />
               </span>
             </button>
-            <button className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded">
+            <button
+              onClick={() => signIn("github")}
+              className="relative bg-white border-2 border-black font-bold text-xs mx-3 py-2 rounded"
+            >
               Continue With Github
               <span className="absolute left-2 top-1/2 -translate-y-1/2 size-12 flex justify-center items-center">
                 <FaGithub className="text-xl" />

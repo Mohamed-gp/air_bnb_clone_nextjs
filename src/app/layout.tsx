@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import StoreProvider from "@/redux/Provider";
+import { NextAuthProvider } from "./NextAuthProvider";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,11 +24,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} relative`}>
-        <Header />
-        <ToastContainer position="top-center" />
-        {children}
-      </body>
+      <NextAuthProvider>
+        <StoreProvider>
+          <body className={`${poppins.className} relative`}>
+            <Header />
+            <ToastContainer position="top-center" />
+            {children}
+          </body>
+        </StoreProvider>
+      </NextAuthProvider>
     </html>
   );
 }

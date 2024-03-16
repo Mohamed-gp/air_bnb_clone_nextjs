@@ -1,16 +1,20 @@
 "use client";
 import Image from "next/image";
 import { FaBars } from "react-icons/fa6";
-import { useState } from "react";
 import RegisterModel from "../modals/RegisterModel";
 import AuthMenu from "./AuthMenu";
 import LoginModel from "../modals/LoginModel";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { uiActions } from "@/redux/uiSlice/uiSlice";
+import { IRootState } from "@/redux/store";
 
 const RightHeader = () => {
-  const [menuisopen, setmenuisopen] = useState(false);
-  const [registermodelisopen, setregistermodelisopen] = useState(false);
-  const [loginmodelisopen, setloginmodelisopen] = useState(false);
-
+  const dispatch = useDispatch();
+  const registerModelIsOpen = useSelector(
+    (state : IRootState) => state.ui.registerModelIsOpen
+  );
+  const loginModelIsOpen = useSelector((state : IRootState) => state.ui.loginModelIsOpen);
   return (
     <>
       <div className="flex gap-3">
@@ -19,7 +23,7 @@ const RightHeader = () => {
         </button>
         <div
           className="relative profile flex gap-2 border py-2 rounded-3xl px-3 hover:shadow-md cursor-pointer duration-500 items-center"
-          onClick={() => setmenuisopen((prev) => !prev)}
+          onClick={() => dispatch(uiActions.toggleMenu(null))}
         >
           <FaBars />
           <div className="size-7 md:block hidden rounded-full overflow-hidden">
@@ -30,25 +34,13 @@ const RightHeader = () => {
               height={30}
             />
           </div>
-          <AuthMenu
-            menuisopen={menuisopen}
-            setmenuisopen={setmenuisopen}
-            registermodelisopen={registermodelisopen}
-            setregistermodelisopen={setregistermodelisopen}
-            loginmodelisopen={loginmodelisopen}
-            setloginmodelisopen={setloginmodelisopen}
-
-          />
+          {/* menu */}
+          <AuthMenu />
         </div>
       </div>
-      <RegisterModel
-        registermodelisopen={registermodelisopen}
-        setregistermodelisopen={setregistermodelisopen}
-      />
-      <LoginModel
-        loginmodelisopen={loginmodelisopen}
-        setloginmodelisopen={setloginmodelisopen}
-      />
+      <RegisterModel />
+      {/* <LoginModel /> */}
+      {loginModelIsOpen && <LoginModel />}
     </>
   );
 };
