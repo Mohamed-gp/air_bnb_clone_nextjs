@@ -15,6 +15,7 @@
     "@types/bcrypt": "^5.0.2",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "joi": "^17.12.2",
     "next": "14.1.0",
     "next-auth": "^4.24.6",

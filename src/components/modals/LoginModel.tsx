@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { IRootState } from "@/redux/store";
 import { signIn, useSession } from "next-auth/react";
+import { authActions } from "@/redux/authSlice/authSlice";
 
 const LoginModel = () => {
   const { data: session } = useSession();
@@ -33,11 +34,13 @@ const LoginModel = () => {
       password,
     };
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:3000/api/auth/login",
         body
       );
-      toast.success(response.data.message);
+      toast.success(data.message);
+      dispatch(authActions.login(data.data));
+      dispatch(uiActions.setLoginModelIsOpen(false));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);

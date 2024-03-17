@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { IRootState } from "@/redux/store";
 import { signIn } from "next-auth/react";
+import { authActions } from "@/redux/authSlice/authSlice";
 
 const RegisterModel = () => {
   const dispatch = useDispatch();
@@ -34,11 +35,13 @@ const RegisterModel = () => {
       password,
     };
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:3000/api/auth/register",
         body
       );
-      return toast.success(response.data.message);
+      toast.success(data.message);
+      dispatch(authActions.register(data.data));
+      dispatch(uiActions.setRegisterModelIsOpen(false))
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
