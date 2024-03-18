@@ -41,7 +41,7 @@ const RegisterModel = () => {
       );
       toast.success(data.message);
       dispatch(authActions.register(data.data));
-      dispatch(uiActions.setRegisterModelIsOpen(false))
+      dispatch(uiActions.setRegisterModelIsOpen(false));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
@@ -160,7 +160,17 @@ const RegisterModel = () => {
           </div>
           <div className="flex gap-1 pb-4 ml-5 text-[12px]">
             <p className="opacity-50">Already Have An Account? </p>
-            <p className="font-bold underline">Login</p>
+            <p
+              className="cursor-pointer font-bold underline"
+              onClick={() => {
+                dispatch(
+                  uiActions.setRegisterModelIsOpen(false),
+                  dispatch(uiActions.setLoginModelIsOpen(true))
+                );
+              }}
+            >
+              Sign In
+            </p>
           </div>
         </div>
       </div>

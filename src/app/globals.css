@@ -29,3 +29,22 @@ body {
     -o-transform: translateY(0);
   }
 }
+
+/* scroll bar style */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(115 115 115) black;
+}
+body::-webkit-scrollbar-track {
+  width: 10px;
+  background: black;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(115 115 115);
+  border-radius: 6px;
+  border: 3px solid rgb(115 115 115);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}

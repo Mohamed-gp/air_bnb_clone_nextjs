@@ -1,10 +1,29 @@
+"use client";
+import { uiActions } from "@/redux/uiSlice/uiSlice";
 import Image from "next/image";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
 
 const LeftHeader = () => {
+  const dispatch = useDispatch();
+  const handleLogoClick = () => {
+    dispatch(uiActions.setCategoryLogoClick(true));
+    setTimeout(() => {
+      dispatch(uiActions.setCategoryLogoClick(false));
+    }, 0);
+  };
   return (
     <Link href="/" className="left-header w-[198px] md:block hidden">
-      <Image priority src="/images/logo.png" width={100} height={100} alt="log" />
+      <Image
+        onClick={() => {
+          handleLogoClick();
+        }}
+        priority
+        src="/images/logo.png"
+        width={100}
+        height={100}
+        alt="log"
+      />
     </Link>
   );
 };

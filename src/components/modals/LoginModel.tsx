@@ -138,8 +138,8 @@ const LoginModel = () => {
             </button>
           </div>
           <div className="flex gap-1 pb-4 ml-5 text-[12px]">
-            <p className="opacity-50">Already Have An Account? </p>
-            <p className="font-bold underline">Login</p>
+            <p className="opacity-50">Dont Have An Account? </p>
+            <p className="cursor-pointer font-bold underline" onClick={() => {dispatch(uiActions.setLoginModelIsOpen(false),dispatch(uiActions.setRegisterModelIsOpen(true)))}}>Sign Up</p>
           </div>
         </div>
       </div>

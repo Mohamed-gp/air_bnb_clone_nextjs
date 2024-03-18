@@ -11,6 +11,7 @@ import { IRootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
 import { authActions } from "@/redux/authSlice/authSlice";
 import { useEffect } from "react";
+import AirbnbYourHomeModel from "../modals/AirbnbYourHomeModel";
 
 const RightHeader = () => {
   // to do sucurity any one with if the user sign with google then github the github info will override google info because they are with the same info
@@ -36,9 +37,6 @@ const RightHeader = () => {
   return (
     <>
       <div className="flex gap-3">
-        <button className="md:block hidden font-semibold text-xs hover:bg-hoverColor rounded-3xl duration-500 py-1 px-3">
-          Airbnb your Home
-        </button>
         <div
           className="relative profile flex gap-2 border py-2 rounded-3xl px-3 hover:shadow-md cursor-pointer duration-500 items-center"
           onClick={() => dispatch(uiActions.toggleMenu(null))}
@@ -57,6 +55,7 @@ const RightHeader = () => {
         </div>
       </div>
       <RegisterModel />
+      <AirbnbYourHomeModel />
       {/* <LoginModel /> */}
       {loginModelIsOpen && <LoginModel />}
     </>
