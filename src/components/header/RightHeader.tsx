@@ -27,7 +27,7 @@ const RightHeader = () => {
       };
       dispatch(authActions.login(data));
     }
-  }, [session?.user]);
+  }, [session]);
   const registerModelIsOpen = useSelector(
     (state: IRootState) => state.ui.registerModelIsOpen
   );

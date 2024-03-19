@@ -33,11 +33,17 @@ const uiSlice = createSlice({
     setCategoryLogoClick(state,action) {
       state.CategoryLogoClick = action.payload
     },
-    increaseAirBnbYouHomeType(state,action) {
+    increaseAirBnbYourHomeType(state,action) {
       state.airBnbYourHome = state.airBnbYourHome + 1
     },
-    decreaseAirBnbYouHomeType(state,action) {
+    decreaseAirBnbYourHomeType(state,action) {
       state.airBnbYourHome = state.airBnbYourHome - 1
+    },
+    setAirBnbYourHomeTypeMinusOne(state,action) {
+      state.airBnbYourHome = -1
+    },
+    setAirBnbYourHomeTypeZero(state,action) {
+      state.airBnbYourHome = 0
     }
   },
 });

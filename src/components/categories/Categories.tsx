@@ -32,6 +32,7 @@ const Categories = () => {
       {categories.map((category) => (
         <>
           <div
+            key={category.label}
             onClick={() => {
               changeCategory(category.label);
             }}

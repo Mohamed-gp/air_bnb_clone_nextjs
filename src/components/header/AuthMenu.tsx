@@ -62,7 +62,12 @@ export default function AuthMenu({}) {
                 <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
                   My Properties
                 </li>
-                <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
+                <li
+                  onClick={() => {
+                    dispatch(uiActions.setAirBnbYourHomeTypeZero(null));
+                  }}
+                  className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500"
+                >
                   Airbnb My Home
                 </li>
                 <li
