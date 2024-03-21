@@ -13,8 +13,8 @@ const uiInitialState: uiInitialStateType = {
   registerModelIsOpen: false,
   loginModelIsOpen: false,
   menuIsOpen: false,
-  CategoryLogoClick : false,
-  airBnbYourHome: airBnbYouHomeType.default
+  CategoryLogoClick: false,
+  airBnbYourHome: airBnbYouHomeType.default,
 };
 
 const uiSlice = createSlice({
@@ -30,21 +30,23 @@ const uiSlice = createSlice({
     setLoginModelIsOpen(state, action: { payload: boolean }) {
       state.loginModelIsOpen = action.payload;
     },
-    setCategoryLogoClick(state,action) {
-      state.CategoryLogoClick = action.payload
+    setCategoryLogoClick(state, action) {
+      state.CategoryLogoClick = action.payload;
     },
-    increaseAirBnbYourHomeType(state,action) {
-      state.airBnbYourHome = state.airBnbYourHome + 1
+    setAirBnbYourHomeType(state, action) {
+      if (action.payload == "Next") {
+        state.airBnbYourHome = state.airBnbYourHome + 1;
+      }
+      if (action.payload == "Back") {
+        state.airBnbYourHome = state.airBnbYourHome - 1;
+      }
+      if (action.payload == "Zero") {
+        state.airBnbYourHome = 0;
+      }
+      if (action.payload == "Remove") {
+        state.airBnbYourHome = -1;
+      }
     },
-    decreaseAirBnbYourHomeType(state,action) {
-      state.airBnbYourHome = state.airBnbYourHome - 1
-    },
-    setAirBnbYourHomeTypeMinusOne(state,action) {
-      state.airBnbYourHome = -1
-    },
-    setAirBnbYourHomeTypeZero(state,action) {
-      state.airBnbYourHome = 0
-    }
   },
 });
 

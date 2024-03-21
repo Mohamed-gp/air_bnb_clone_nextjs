@@ -1,25 +1,25 @@
 "use client";
 import useCountries from "@/hooks/useCountries";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { get } from "http";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
+import Map from "@/components/map/Map"
 
-const LocationStep = ({ airBnbYourHome }) => {
+interface LocationStepProps {
+  airBnbYourHome: number;
+}
+
+const LocationStep = ({ airBnbYourHome } : LocationStepProps ) => {
   const dispatch = useDispatch();
-  const { getAll, getByValue } = useCountries();
-  const [chosedCategory, setchosedCategory] = useState("");
-  const submitHandler = (e, direction) => {
+  const [country, setcountry] = useState();
+  const { getAll } = useCountries();
+  const submitHandler = (e : React.FormEvent<HTMLInputElement>, direction: string) => {
     e.preventDefault();
-    if (chosedCategory != "" && direction == "Next") {
-      dispatch(uiActions.increaseAirBnbYourHomeType(null));
-    }
-    if (direction == "Back") {
-      dispatch(uiActions.decreaseAirBnbYourHomeType(null));
-    }
+    dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
+
 
   return (
     <div
@@ -34,7 +34,7 @@ const LocationStep = ({ airBnbYourHome }) => {
           <p className="text-center font-bold text-sm">Airbnb You Home!</p>
           <FaX
             onClick={() => {
-              dispatch(uiActions.setAirBnbYourHomeTypeMinusOne(null));
+              dispatch(uiActions.setAirBnbYourHomeType("Remove"));
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-[11px] opacity-60 cursor-pointer"
           />
@@ -42,9 +42,10 @@ const LocationStep = ({ airBnbYourHome }) => {
         <form className="py-6 px-4 flex flex-col gap-2">
           <p className="font-bold">Where Is Your Place Located?</p>
           <p className="opacity-60 text-xs">Help Geusts Find You!</p>
-          <div className="flex flex-wrap my-3 gap-5 justify-center">
+          <div className="flex flex-wrap my-3 gap-5 justify-center relative z-10">
             <Select
-              value={null}
+              value={country}
+              onChange={(e) => setcountry(e)}
               formatOptionLabel={(option: any) => (
                 <div className="flex flex-row items-center gap-3 ">
                   <div>{option.flag}</div>
@@ -76,18 +77,19 @@ const LocationStep = ({ airBnbYourHome }) => {
               })}
             ></Select>
           </div>
-          <div className="flex gap-2 -z-10">
+          <Map latlng={country?.latlng } />
+          <div className="flex gap-2 ">
             <input
               onClick={(e) => submitHandler(e, "Back")}
               type="submit"
               value="Back"
-              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
+              className="text-white cursor-pointer  bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
             />
             <input
               onClick={(e) => submitHandler(e, "Next")}
               type="submit"
               value="Next"
-              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
+              className="cursor-pointer text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
             />
           </div>
         </form>

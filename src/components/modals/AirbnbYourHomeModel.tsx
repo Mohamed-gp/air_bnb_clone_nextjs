@@ -13,15 +13,17 @@ import { authActions } from "@/redux/authSlice/authSlice";
 import { categories } from "@/utils/categories";
 import CategoriesStep from "./airbnb-your-home-items/CategoriesStep";
 import LocationStep from "./airbnb-your-home-items/LocationStep"
+import InfoStep from "./airbnb-your-home-items/InfoStep";
+import ImagesStep from "./airbnb-your-home-items/ImagesStep";
 
 const AirbnbYourHomeModel = () => {
-  const airBnbYourHome = useSelector((state) => state.ui.airBnbYourHome);
-  const dispatch = useDispatch();
-  
+  const airBnbYourHome = useSelector((state : IRootState) => state.ui.airBnbYourHome);
   return (
     <>
       <CategoriesStep airBnbYourHome={airBnbYourHome} />
       <LocationStep airBnbYourHome={airBnbYourHome} />
+      <InfoStep airBnbYourHome={airBnbYourHome}/>
+      <ImagesStep airBnbYourHome={airBnbYourHome}/>
     </>
   );
 };

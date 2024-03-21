@@ -1,18 +1,25 @@
 "use client";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { categories } from "@/utils/categories";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-const CategoriesStep = ({ airBnbYourHome }) => {
+interface CategoriesStepProps {
+  airBnbYourHome: number;
+}
+
+const CategoriesStep = ({ airBnbYourHome }: CategoriesStepProps) => {
   const dispatch = useDispatch();
   const [chosedCategory, setchosedCategory] = useState("");
-  const submitHandler = (e) => {
+  const submitHandler = (
+    e: React.FormEvent<HTMLFormElement>,
+    direction: string
+  ) => {
     e.preventDefault();
     if (chosedCategory != "") {
-      dispatch(uiActions.increaseAirBnbYourHomeType(null));
+      dispatch(uiActions.setAirBnbYourHomeType(direction));
     } else {
       toast.error("Please Choose A Category");
     }
@@ -31,12 +38,15 @@ const CategoriesStep = ({ airBnbYourHome }) => {
           <p className="text-center font-bold text-sm">Airbnb You Home!</p>
           <FaX
             onClick={() => {
-              dispatch(uiActions.setAirBnbYourHomeTypeMinusOne(null));
+              dispatch(uiActions.setAirBnbYourHomeType("Remove"));
             }}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-[11px] opacity-60 cursor-pointer"
           />
         </div>
-        <form className="py-6 px-4 flex flex-col gap-2">
+        <form
+          className="py-6 px-4 flex flex-col gap-2"
+          onSubmit={(e) => submitHandler(e, "Next")}
+        >
           <p className="font-bold">Which Of This Best Descripe Your Home?</p>
           <p className="opacity-60 text-xs">Pick A Category!</p>
           <div className="flex flex-wrap my-3 gap-5 justify-center">
@@ -61,7 +71,6 @@ const CategoriesStep = ({ airBnbYourHome }) => {
           </div>
 
           <input
-            onClick={submitHandler}
             type="submit"
             value="Next"
             className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"

@@ -17,7 +17,7 @@ const RightHeader = () => {
   // to do sucurity any one with if the user sign with google then github the github info will override google info because they are with the same info
   const dispatch = useDispatch();
   const { data: session } = useSession();
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state: IRootState) => state.auth.user);
   useEffect(() => {
     if (session) {
       const data = {

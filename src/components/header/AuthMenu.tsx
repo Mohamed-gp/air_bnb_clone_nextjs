@@ -64,7 +64,7 @@ export default function AuthMenu({}) {
                 </li>
                 <li
                   onClick={() => {
-                    dispatch(uiActions.setAirBnbYourHomeTypeZero(null));
+                    dispatch(uiActions.setAirBnbYourHomeType("Zero"));
                   }}
                   className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500"
                 >

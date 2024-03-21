@@ -1,4 +1,3 @@
-import { register } from "module";
 import countries from "world-countries";
 
 const formatedCountries = countries.map((country) => ({

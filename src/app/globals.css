@@ -60,10 +60,8 @@ body {
 *::-webkit-scrollbar-thumb:hover {
   background: #ff4046;
 }
-/* leaflet  */
-.leaflet-bottom,
-.leaflet-control,
-.leaflet-pane,
-.leaflet-top {
-  z-index: 0 !important;
+/* leaflet   */
+
+.leaflet-container {
+  height: 150px;
 }
