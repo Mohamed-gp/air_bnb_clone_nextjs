@@ -1,21 +1,24 @@
 "use client";
 import useCountries from "@/hooks/useCountries";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import Map from "@/components/map/Map"
+import Map from "@/components/map/Map";
 
 interface LocationStepProps {
   airBnbYourHome: number;
 }
 
-const LocationStep = ({ airBnbYourHome } : LocationStepProps ) => {
+const LocationStep = ({ airBnbYourHome }: LocationStepProps) => {
   const dispatch = useDispatch();
   const [country, setcountry] = useState();
   const { getAll } = useCountries();
-  const submitHandler = (e : React.FormEvent<HTMLInputElement>, direction: string) => {
+  const submitHandler = (
+    e: React.FormEvent<HTMLInputElement>,
+    direction: string
+  ) => {
     e.preventDefault();
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
@@ -77,7 +80,7 @@ const LocationStep = ({ airBnbYourHome } : LocationStepProps ) => {
               })}
             ></Select>
           </div>
-          <Map latlng={country?.latlng } />
+          <Map latlng={country?.latlng} />
           <div className="flex gap-2 ">
             <input
               onClick={(e) => submitHandler(e, "Back")}
