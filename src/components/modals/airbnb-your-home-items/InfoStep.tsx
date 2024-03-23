@@ -9,13 +9,17 @@ import { toast } from "react-toastify";
 
 interface InfoStepProps {
   airBnbYourHome: number;
+  guestsCount: number;
+    setguestsCount: React.Dispatch<React.SetStateAction<number>>;
+    roomsCount: number;
+    setroomsCount: React.Dispatch<React.SetStateAction<number>>;
+    bathroomsCount: number;
+    setbathroomsCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const InfoStep = ({ airBnbYourHome }: InfoStepProps) => {
+const InfoStep = ({ airBnbYourHome,guestsCount,setguestsCount,roomsCount,setroomsCount,bathroomsCount,setbathroomsCount }: InfoStepProps) => {
   const dispatch = useDispatch();
-  const [guestsCount, setguestsCount] = useState(2);
-  const [roomsCount, setroomsCount] = useState(3);
-  const [bathroomsCount, setbathroomsCount] = useState(1);
+
 
   const submitHandler = (
     e: React.FormEvent<HTMLInputElement>,

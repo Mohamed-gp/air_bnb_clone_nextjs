@@ -9,7 +9,14 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ImageUpload from "@/components/cloudinary/ImageUpload";
 
-const ImagesStep = ({ airBnbYourHome }) => {
+interface ImagesStepProps{
+    airBnbYourHome:number;
+    imagesrc: string | null;
+    setimagesrc:React.Dispatch<React.SetStateAction<any>>;
+    
+}
+
+const ImagesStep = ({ airBnbYourHome,imagesrc,setimagesrc } : ImagesStepProps) => {
   const dispatch = useDispatch();
 
   const submitHandler = (
@@ -40,10 +47,10 @@ const ImagesStep = ({ airBnbYourHome }) => {
         <form className="py-6 px-4 flex flex-col gap-2">
           <p className="font-bold">Add A Photo Of Your Place</p>
           <p className="opacity-60 text-xs">
-            Show Your Guests How YOUR House Look Like
+            Show Your Guests How Your House Look Like
           </p>
           <div className="flex flex-col gap-3 my-3">
-            <ImageUpload/>
+            <ImageUpload  imagesrc={imagesrc} setimagesrc={setimagesrc}/>
           </div>
           <div className="flex gap-2 ">
             <input

@@ -9,11 +9,12 @@ import Map from "@/components/map/Map";
 
 interface LocationStepProps {
   airBnbYourHome: number;
+  country : any,
+  setcountry : React.Dispatch<any>
 }
 
-const LocationStep = ({ airBnbYourHome }: LocationStepProps) => {
+const LocationStep = ({ airBnbYourHome ,country,setcountry}: LocationStepProps) => {
   const dispatch = useDispatch();
-  const [country, setcountry] = useState();
   const { getAll } = useCountries();
   const submitHandler = (
     e: React.FormEvent<HTMLInputElement>,

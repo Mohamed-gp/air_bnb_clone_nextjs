@@ -28,17 +28,19 @@ export const authOptions: NextAuthOptions = {
           data: {
             email: profile?.email as string,
             username: profile?.name as string,
-            image: profile?.picture as string || profile?.avatar_url as string,
+            image:
+              (profile?.picture as string) || (profile?.avatar_url as string),
           },
         });
-      }else {
+      } else {
         await prismaClient.user.update({
           where: {
             email: profile?.email as string,
           },
           data: {
             username: profile?.name as string,
-            image: profile?.picture as string || profile?.avatar_url as string,
+            image:
+              (profile?.picture as string) || (profile?.avatar_url as string),
           },
         });
       }
@@ -62,6 +64,22 @@ export const authOptions: NextAuthOptions = {
 
       // })
       return true; // Return true to allow sign in and false for acces denied
+    },
+    jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.id = user?.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      // I skipped the line below coz it gave me a TypeError
+      // session.accessToken = token.accessToken;
+      console.log(token);
+      session.user.id = token.id;
+      console.log(session);
+
+      return session;
     },
   },
 };

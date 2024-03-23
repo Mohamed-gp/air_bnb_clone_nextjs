@@ -24,6 +24,7 @@ const RightHeader = () => {
         email: session?.user?.email,
         image: session.user?.image,
         username: session.user?.name,
+        id: session.user?.id,
       };
       dispatch(authActions.login(data));
     }

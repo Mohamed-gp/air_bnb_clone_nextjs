@@ -8,11 +8,16 @@ import { toast } from "react-toastify";
 
 interface CategoriesStepProps {
   airBnbYourHome: number;
+  chosedCategory: string;
+  setchosedCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const CategoriesStep = ({ airBnbYourHome }: CategoriesStepProps) => {
+const CategoriesStep = ({
+  airBnbYourHome,
+  chosedCategory,
+  setchosedCategory,
+}: CategoriesStepProps) => {
   const dispatch = useDispatch();
-  const [chosedCategory, setchosedCategory] = useState("");
   const submitHandler = (
     e: React.FormEvent<HTMLFormElement>,
     direction: string
