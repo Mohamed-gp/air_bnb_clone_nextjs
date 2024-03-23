@@ -17,14 +17,14 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ account, profile }) {
-      let user = await prismaClient.user.findUnique({
+    async signIn({ account, profile, user }) {
+      let userFromDb = await prismaClient.user.findUnique({
         where: {
           email: profile?.email as string,
         },
       });
-      if (!user) {
-        user = await prismaClient.user.create({
+      if (!userFromDb) {
+        userFromDb = await prismaClient.user.create({
           data: {
             email: profile?.email as string,
             username: profile?.name as string,
@@ -44,42 +44,23 @@ export const authOptions: NextAuthOptions = {
           },
         });
       }
-      //console.log(profile);  this contain the user profile details like name, email, image etc
-      // console.log(account); this contain the user account details like token and provider
 
-      // await prismaClient.user.upsert({
-      //   where: {
-      //     email: profile?.email as string,
-      //   },
-      //   update: {
-      //     email: profile?.email as string,
-      //     username: profile?.name as string,
-      //     image: profile?.picture as string,
-      //   },
-      //   create: {
-      //     email: profile?.email as string,
-      //     username: profile?.name as string,
-      //     image: profile?.picture as string,
-      //   },
-
-      // })
+      if (user) {
+        user.id = userFromDb.id;
+      }
       return true; // Return true to allow sign in and false for acces denied
     },
-    jwt({ token, account, user }) {
-      if (account) {
-        token.accessToken = account.access_token;
-        token.id = user?.id;
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
       }
       return token;
-    },
-    session({ session, token }) {
-      // I skipped the line below coz it gave me a TypeError
-      // session.accessToken = token.accessToken;
-      console.log(token);
-      session.user.id = token.id;
-      console.log(session);
-
-      return session;
     },
   },
 };

@@ -16,7 +16,7 @@ interface PriceStepProps {
   price: string;
   setprice: React.Dispatch<React.SetStateAction<string>>;
   chosedCategory: string;
-  country: string;
+  country: string | null;
   imagesrc: string | null;
   guestsCount: number;
   roomsCount: number;
@@ -55,7 +55,7 @@ const PriceStep = ({
     e.preventDefault();
     const dataToSubmit = {
       category: chosedCategory,
-      locationValue: country,
+      locationValue: country?.toString(),
       guestCount: guestsCount,
       roomCount: roomsCount,
       bathroomCount: bathroomsCount,

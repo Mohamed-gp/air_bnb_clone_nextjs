@@ -21,7 +21,6 @@ const AirbnbYourHomeModel = () => {
   const airBnbYourHome = useSelector(
     (state: IRootState) => state.ui.airBnbYourHome
   );
-
   const [chosedCategory, setchosedCategory] = useState("");
   const [country, setcountry] = useState();
   const [title, settitle] = useState("");
