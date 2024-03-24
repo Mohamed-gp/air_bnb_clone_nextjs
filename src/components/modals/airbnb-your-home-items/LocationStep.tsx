@@ -6,6 +6,7 @@ import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
 import Map from "@/components/map/Map";
+import { toast } from "react-toastify";
 
 interface LocationStepProps {
   airBnbYourHome: number;
@@ -21,6 +22,10 @@ const LocationStep = ({ airBnbYourHome ,country,setcountry}: LocationStepProps) 
     direction: string
   ) => {
     e.preventDefault();
+    if (direction == "Next" && !country) {
+      return toast.error("Please Choose A Location");
+      
+    }
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
 

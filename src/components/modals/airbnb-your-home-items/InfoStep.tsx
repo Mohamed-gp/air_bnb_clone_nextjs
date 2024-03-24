@@ -10,16 +10,23 @@ import { toast } from "react-toastify";
 interface InfoStepProps {
   airBnbYourHome: number;
   guestsCount: number;
-    setguestsCount: React.Dispatch<React.SetStateAction<number>>;
-    roomsCount: number;
-    setroomsCount: React.Dispatch<React.SetStateAction<number>>;
-    bathroomsCount: number;
-    setbathroomsCount: React.Dispatch<React.SetStateAction<number>>;
+  setguestsCount: React.Dispatch<React.SetStateAction<number>>;
+  roomsCount: number;
+  setroomsCount: React.Dispatch<React.SetStateAction<number>>;
+  bathroomsCount: number;
+  setbathroomsCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const InfoStep = ({ airBnbYourHome,guestsCount,setguestsCount,roomsCount,setroomsCount,bathroomsCount,setbathroomsCount }: InfoStepProps) => {
+const InfoStep = ({
+  airBnbYourHome,
+  guestsCount,
+  setguestsCount,
+  roomsCount,
+  setroomsCount,
+  bathroomsCount,
+  setbathroomsCount,
+}: InfoStepProps) => {
   const dispatch = useDispatch();
-
 
   const submitHandler = (
     e: React.FormEvent<HTMLInputElement>,
@@ -54,11 +61,24 @@ const InfoStep = ({ airBnbYourHome,guestsCount,setguestsCount,roomsCount,setroom
           <p className="font-bold">Share Some Basics About Your Place</p>
           <p className="opacity-60 text-xs">What Ameneties Do You Have</p>
           <div className="flex flex-col gap-3 my-3">
-
-            <Counter value={guestsCount} title="Geusts" description="How Many Guests Do You Allow" setvalue={setguestsCount}/>
-            <Counter value={roomsCount} title="Rooms" description="How Many Romms Do You Have" setvalue={setroomsCount}/>
-            <Counter value={bathroomsCount} title="Bathrooms" description="How Many Bathrooms Do You Have" setvalue={setbathroomsCount}/>
-            
+            <Counter
+              value={guestsCount}
+              title="Geusts"
+              description="How Many Guests Do You Allow"
+              setvalue={setguestsCount}
+            />
+            <Counter
+              value={roomsCount}
+              title="Rooms"
+              description="How Many Romms Do You Have"
+              setvalue={setroomsCount}
+            />
+            <Counter
+              value={bathroomsCount}
+              title="Bathrooms"
+              description="How Many Bathrooms Do You Have"
+              setvalue={setbathroomsCount}
+            />
           </div>
           <div className="flex gap-2 ">
             <input

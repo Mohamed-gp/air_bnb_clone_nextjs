@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es2017",
     "useUnknownInCatchVariables": false,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

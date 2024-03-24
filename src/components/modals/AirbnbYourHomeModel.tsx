@@ -22,7 +22,7 @@ const AirbnbYourHomeModel = () => {
     (state: IRootState) => state.ui.airBnbYourHome
   );
   const [chosedCategory, setchosedCategory] = useState("");
-  const [country, setcountry] = useState();
+  const [country, setcountry] = useState("");
   const [title, settitle] = useState("");
   const [description, setdescription] = useState("");
   const [guestsCount, setguestsCount] = useState(2);

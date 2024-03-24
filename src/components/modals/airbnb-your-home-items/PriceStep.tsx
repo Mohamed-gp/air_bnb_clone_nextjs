@@ -16,7 +16,7 @@ interface PriceStepProps {
   price: string;
   setprice: React.Dispatch<React.SetStateAction<string>>;
   chosedCategory: string;
-  country: string | null;
+  country: string;
   imagesrc: string | null;
   guestsCount: number;
   roomsCount: number;
@@ -53,9 +53,12 @@ const PriceStep = ({
     e: React.FormEvent<HTMLInputElement>
   ) => {
     e.preventDefault();
+    if (!price || !title || !description) {
+      return toast.error("Please Fill All Information");
+    }
     const dataToSubmit = {
       category: chosedCategory,
-      locationValue: country?.toString(),
+      locationValue: country.label,
       guestCount: guestsCount,
       roomCount: roomsCount,
       bathroomCount: bathroomsCount,
@@ -68,7 +71,7 @@ const PriceStep = ({
     try {
       const { data } = await axios.post("/api/listings", dataToSubmit);
       toast.success("Property Added Successfully");
-      console.log(data);
+      dispatch(uiActions.setAirBnbYourHomeType("Remove"));
     } catch (error) {
       console.log(error.response.data.message);
       toast.error(error.response.data.message);

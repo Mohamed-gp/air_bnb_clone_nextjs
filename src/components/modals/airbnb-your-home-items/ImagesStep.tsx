@@ -24,6 +24,10 @@ const ImagesStep = ({ airBnbYourHome,imagesrc,setimagesrc } : ImagesStepProps) =
     direction: string
   ) => {
     e.preventDefault();
+    if (direction == "Next" && imagesrc == null) {
+      return toast.error("Please Upload An Image");
+        
+    }
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
   return (
