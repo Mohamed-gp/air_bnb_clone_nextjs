@@ -46,7 +46,7 @@ const PriceStep = ({
     e.preventDefault();
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
 
   // form submit handler post method to add property
   const lastFormSubmitHandler = async (
@@ -66,7 +66,7 @@ const PriceStep = ({
       title,
       description,
       price: +price,
-      userId: user.id,
+      userId: "user id here",
     };
     try {
       const { data } = await axios.post("/api/listings", dataToSubmit);

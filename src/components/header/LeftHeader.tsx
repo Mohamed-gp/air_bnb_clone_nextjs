@@ -5,19 +5,10 @@ import Link from "next/link";
 import { useDispatch } from "react-redux";
 
 const LeftHeader = () => {
-  const dispatch = useDispatch();
-  const handleLogoClick = () => {
-    dispatch(uiActions.setCategoryLogoClick(true));
-    setTimeout(() => {
-      dispatch(uiActions.setCategoryLogoClick(false));
-    }, 0);
-  };
+
   return (
     <Link href="/" className="left-header w-[198px] md:block hidden">
       <Image
-        onClick={() => {
-          handleLogoClick();
-        }}
         priority
         src="/images/logo.png"
         width={100}

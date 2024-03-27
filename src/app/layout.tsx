@@ -24,19 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NextAuthProvider>
-        <StoreProvider>
-          <body className={`${poppins.className} relative`}>
+      <body className={`${poppins.className} relative`}>
+        <NextAuthProvider>
+          <StoreProvider>
             <Header />
             <ToastContainer position="top-center" />
             {children}
-          </body>
-        </StoreProvider>
-      </NextAuthProvider>
+          </StoreProvider>
+        </NextAuthProvider>
+      </body>
     </html>
   );
 }
 
-
-
-// tell achraf about the library 
+// tell achraf about the library

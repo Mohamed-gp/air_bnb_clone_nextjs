@@ -8,49 +8,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { IRootState } from "@/redux/store";
 import { signIn } from "next-auth/react";
-import { authActions } from "@/redux/authSlice/authSlice";
 
 const RegisterModel = () => {
   const dispatch = useDispatch();
   const registerModelIsOpen = useSelector(
     (state: IRootState) => state.ui.registerModelIsOpen
   );
-  // useEffect to hide the model when click outside the model
+  // useEffect to hide the model   when click outside the model
 
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    if (email.trim() == "") {
+    if (data.email.trim() == "") {
       return toast.error("email musn't be empty");
     }
-    if (username.trim() == "") {
+    if (data.username.trim() == "") {
       return toast.error("username musn't be empty");
     }
-    if (password.trim() == "") {
+    if (data.password.trim() == "") {
       return toast.error("password musn't be empty");
     }
-    const body = {
-      email,
-      username,
-      password,
-    };
     try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        body
-      );
-      toast.success(data.message);
-      dispatch(authActions.register(data.data));
-      dispatch(uiActions.setRegisterModelIsOpen(false));
+      const result = await axios.post("/api/auth/register", data);
+      console.log(result);
+      toast.success(result.data.message);
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     }
   };
   // states to get the values of the form
-  const [username, setusername] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [data, setdata] = useState({ username: "", email: "", password: "" });
   return (
     <>
       <div
@@ -79,8 +67,8 @@ const RegisterModel = () => {
             {/* email */}
             <div className="relative">
               <input
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
+                value={data.email}
+                onChange={(e) => setdata({ ...data, email: e.target.value })}
                 type="email"
                 name=""
                 id="email"
@@ -89,7 +77,7 @@ const RegisterModel = () => {
               <label
                 htmlFor="email"
                 className={`absolute ${
-                  !email ? "text-[13px] top-3" : "text-[10px] top-1 "
+                  !data.email ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
               >
                 Email
@@ -100,15 +88,19 @@ const RegisterModel = () => {
               <input
                 type="text"
                 name=""
-                value={username}
-                onChange={(e) => setusername(e.target.value)}
+                value={data.username}
+                onChange={(e) =>
+                  setdata({ ...data, username: e.target.value })
+                }
                 id="username"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none rounded-md"
               />
               <label
                 htmlFor="username"
                 className={`absolute ${
-                  !username ? "text-[13px]  top-3   " : "text-[10px] top-1 "
+                  !data.username
+                    ? "text-[13px]  top-3   "
+                    : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
               >
                 Username
@@ -119,15 +111,15 @@ const RegisterModel = () => {
               <input
                 type="password"
                 name=""
-                value={password}
-                onChange={(e) => setpassword(e.target.value)}
+                value={data.password}
+                onChange={(e) => setdata({ ...data, password: e.target.value })}
                 id="password"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none  rounded-md "
               />
               <label
                 htmlFor="password"
                 className={`absolute ${
-                  !password ? "text-[13px] top-3" : "text-[10px] top-1 "
+                  !data.password ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1  duration-500 left-3  opacity-50`}
               >
                 Password

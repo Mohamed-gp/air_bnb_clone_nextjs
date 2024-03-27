@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  const {email , username , password} = body
+  const { email, username, password } = body;
   const { error } = registerVerify(body);
   if (error) {
     return NextResponse.json(
@@ -38,6 +38,6 @@ export const POST = async (req: NextRequest) => {
   });
   return NextResponse.json(
     { message: "Account Created Successfuly", data: newUser },
-    { status: 200 }
+    { status: 201 }
   );
 };

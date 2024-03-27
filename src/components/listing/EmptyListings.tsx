@@ -1,4 +1,8 @@
 "use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 const EmptyListings = () => {
   return (
     <div
@@ -10,9 +14,12 @@ const EmptyListings = () => {
         <p className="opacity-70 text-sm mt-1 mb-3">
           Try Changing Or Removing Some Of Your Filters
         </p>
-        <button className="border-2 font-bold border-black px-6 py-2 rounded-xl">
+        <Link
+          href="/"
+          className="border-2 font-bold border-black px-6 py-2 rounded-xl"
+        >
           Remove All Filters
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
@@ -23,32 +23,30 @@ const LoginModel = () => {
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    if (email.trim() == "") {
+    if (data.email.trim() == "") {
       return toast.error("email musn't be empty");
     }
-    if (password.trim() == "") {
+    if (data.password.trim() == "") {
       return toast.error("password musn't be empty");
     }
-    const body = {
-      email,
-      password,
-    };
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        body
-      );
-      toast.success(data.message);
-      dispatch(authActions.login(data.data));
-      dispatch(uiActions.setLoginModelIsOpen(false));
-    } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error.response.data.message);
-    }
+
+    const response = await signIn("credentials", { ...data, redirect: false });
+    console.log(response)
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:3000/api/auth/login",
+    //     data
+    //   );
+    //   toast.success(response.data.message);
+    //   dispatch(authActions.login(response.data.data));
+    //   dispatch(uiActions.setLoginModelIsOpen(false));
+    // } catch (error) {
+    //   toast.error(error.response.data.message);
+    //   console.log(error.response.data.message);
+    // }
   };
   // states to get the values of the form
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
+  const [data, setdata] = useState({ email: "", password: "" });
   return (
     <>
       <div
@@ -77,8 +75,8 @@ const LoginModel = () => {
             {/* email */}
             <div className="relative">
               <input
-                value={email}
-                onChange={(e) => setemail(e.target.value)}
+                value={data.email}
+                onChange={(e) => setdata({ ...data, email: e.target.value })}
                 type="email"
                 name=""
                 id="email"
@@ -87,7 +85,7 @@ const LoginModel = () => {
               <label
                 htmlFor="email"
                 className={`absolute ${
-                  !email ? "text-[13px] top-3" : "text-[10px] top-1 "
+                  !data.email ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
               >
                 Email
@@ -98,15 +96,15 @@ const LoginModel = () => {
               <input
                 type="password"
                 name=""
-                value={password}
-                onChange={(e) => setpassword(e.target.value)}
+                value={data.password}
+                onChange={(e) => setdata({ ...data, password: e.target.value })}
                 id="password"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none  rounded-md "
               />
               <label
                 htmlFor="password"
                 className={`absolute ${
-                  !password ? "text-[13px] top-3" : "text-[10px] top-1 "
+                  !data.password ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1  duration-500 left-3  opacity-50`}
               >
                 Password
@@ -139,7 +137,17 @@ const LoginModel = () => {
           </div>
           <div className="flex gap-1 pb-4 ml-5 text-[12px]">
             <p className="opacity-50">Dont Have An Account? </p>
-            <p className="cursor-pointer font-bold underline" onClick={() => {dispatch(uiActions.setLoginModelIsOpen(false),dispatch(uiActions.setRegisterModelIsOpen(true)))}}>Sign Up</p>
+            <p
+              className="cursor-pointer font-bold underline"
+              onClick={() => {
+                dispatch(
+                  uiActions.setLoginModelIsOpen(false),
+                  dispatch(uiActions.setRegisterModelIsOpen(true))
+                );
+              }}
+            >
+              Sign Up
+            </p>
           </div>
         </div>
       </div>

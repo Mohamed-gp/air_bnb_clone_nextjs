@@ -10,6 +10,7 @@ interface ErrorPageProps {
 
 
 const ErrorPage = ({error , reset} : ErrorPageProps) => {
+  console.log(error)
   return (
     <>
       <div>Something Went Wrong</div>

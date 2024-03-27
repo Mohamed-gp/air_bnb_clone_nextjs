@@ -1,10 +1,13 @@
+import bcrypt from "bcrypt";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import { prismaClient } from "@/lib/dbClient";
-import { authActions } from "@/redux/authSlice/authSlice";
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prismaClient), // to facilate the use of Prisma with the NextAuth
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -15,53 +18,56 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
-  ],
-  callbacks: {
-    async signIn({ account, profile, user }) {
-      let userFromDb = await prismaClient.user.findUnique({
-        where: {
-          email: profile?.email as string,
-        },
-      });
-      if (!userFromDb) {
-        userFromDb = await prismaClient.user.create({
-          data: {
-            email: profile?.email as string,
-            username: profile?.name as string,
-            image:
-              (profile?.picture as string) || (profile?.avatar_url as string),
-          },
-        });
-      } else {
-        await prismaClient.user.update({
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "credentials",
+      // `credentials` is used to generate a form on the sign in page.
+      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+      // e.g. domain, username, password, 2FA token, etc.
+      // You can pass any HTML attribute to the <input> tag through the object.
+      credentials: {},
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+        if (!credentials) {
+          throw new Error("No credentials provided");
+        }
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Please provide email and password");
+        }
+        const user = await prismaClient.user.findUnique({
           where: {
-            email: profile?.email as string,
-          },
-          data: {
-            username: profile?.name as string,
-            image:
-              (profile?.picture as string) || (profile?.avatar_url as string),
+            email: credentials.email,
           },
         });
-      }
+        if (!user || !user?.hashedPassword) {
+          new Error("no user found ");
+        }
+        const passwordMatch = await bcrypt.compare(
+          credentials?.password,
+          user?.hashedPassword as string
+        );
+        if (!passwordMatch) {
+          new Error("password is incorrect");
+        }
 
-      if (user) {
-        user.id = userFromDb.id;
-      }
-      return true; // Return true to allow sign in and false for acces denied
-    },
-    session: async ({ session, token }) => {
-      if (session?.user) {
-        session.user.id = token.sub;
-      }
-      return session;
-    },
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.uid = user.id;
-      }
-      return token;
-    },
+        return user;
+
+        // if (user) {
+        //   // Any object returned will be saved in `user` property of the JWT
+        //   return user;
+        // } else {
+        //   // If you return null then an error will be displayed advising the user to check their details.
+        //   return null;
+
+        //   // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        // }
+      },
+    }),
+  ],
+  secret: process.env.SECRET, // Add a secret to encrypt the JWT token
+  session: {
+    strategy: "jwt",
   },
+  debug: process.env.NODE_ENV == "development", // to help us detetct any error,
 };
 export default authOptions;
