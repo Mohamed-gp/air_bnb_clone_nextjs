@@ -1,8 +1,6 @@
 "use client";
-import { uiActions } from "@/redux/uiSlice/uiSlice";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 
 const LeftHeader = () => {
 

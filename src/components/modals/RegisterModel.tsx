@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
@@ -30,8 +30,14 @@ const RegisterModel = () => {
     }
     try {
       const result = await axios.post("/api/auth/register", data);
-      console.log(result);
-      toast.success(result.data.message);
+      
+      toast.success(result.data.message, {
+        style: {
+          fontSize: "12px",
+        },
+      });
+      console.log(result.data);
+      dispatch(uiActions.setRegisterModelIsOpen(false));
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
@@ -71,11 +77,11 @@ const RegisterModel = () => {
                 onChange={(e) => setdata({ ...data, email: e.target.value })}
                 type="email"
                 name=""
-                id="email"
+                id="emailRegister"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none rounded-md"
               />
               <label
-                htmlFor="email"
+                htmlFor="emailRegister"
                 className={`absolute ${
                   !data.email ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1 duration-500 left-3  opacity-50`}
@@ -89,9 +95,7 @@ const RegisterModel = () => {
                 type="text"
                 name=""
                 value={data.username}
-                onChange={(e) =>
-                  setdata({ ...data, username: e.target.value })
-                }
+                onChange={(e) => setdata({ ...data, username: e.target.value })}
                 id="username"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none rounded-md"
               />
@@ -113,11 +117,11 @@ const RegisterModel = () => {
                 name=""
                 value={data.password}
                 onChange={(e) => setdata({ ...data, password: e.target.value })}
-                id="password"
+                id="passwordRegister"
                 className="peer pt-5 pb-2 px-3 border-2 text-xs w-full focus:outline-none  rounded-md "
               />
               <label
-                htmlFor="password"
+                htmlFor="passwordRegister"
                 className={`absolute ${
                   !data.password ? "text-[13px] top-3" : "text-[10px] top-1 "
                 }  peer-focus:text-[10px] peer-focus:top-1  duration-500 left-3  opacity-50`}
@@ -127,7 +131,7 @@ const RegisterModel = () => {
             </div>
             <input
               type="submit"
-              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
+              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide cursor-pointer"
             />
           </form>
           <div className="flex flex-col gap-3 pb-8">

@@ -21,7 +21,6 @@ const IndividualListing = ({
   const router = useRouter();
   return (
     <div
-      onClick={() => router.push(`listings/${id}`)}
       className="flex h-[280px] flex-col w-[250px] group"
     >
       <div className="h-[160px] w-[250px]  relative rounded-3xl overflow-hidden">
@@ -32,7 +31,7 @@ const IndividualListing = ({
           alt={title}
           className="rounded-3xl group-hover:scale-110 duration-500"
         />
-        <HeartIndividual houseId={id}/>
+        <HeartIndividual houseId={id} />
       </div>
       <div className="flex items-center justify-between max-w-[300px] px-2 my-2">
         <div className="flex flex-col w-[70%]">

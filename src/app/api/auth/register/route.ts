@@ -1,5 +1,5 @@
 import { registerVerify } from "@/joi/joi";
-import { prismaClient } from "@/lib/dbClient";
+import prisma from "@/lib/dbClient";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,7 +13,7 @@ export const POST = async (req: NextRequest) => {
       { status: 400 }
     );
   }
-  const user = await prismaClient.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
       { status: 400 }
     );
   }
-  const newUser = await prismaClient.user.create({
+  const newUser = await prisma.user.create({
     data: {
       email,
       username,

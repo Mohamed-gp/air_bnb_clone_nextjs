@@ -6,12 +6,11 @@ const result = await fetch("http://localhost:3000/api/listings");
 const data = await result.json();
 
 const AllListings = () => {
-  // console.log(data);
   return (
     <>
       {data.length > 0 ? (
         <div className="container my-6 flex gap-10 gap-y-2 justify-center  items-center  flex-wrap">
-          {data.map((property) => (
+          {data.map((property : any) => (
             <IndividualListing
               id={property.id}
               title={property.title}

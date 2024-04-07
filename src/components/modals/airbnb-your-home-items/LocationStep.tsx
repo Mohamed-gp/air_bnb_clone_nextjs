@@ -10,11 +10,15 @@ import { toast } from "react-toastify";
 
 interface LocationStepProps {
   airBnbYourHome: number;
-  country : any,
-  setcountry : React.Dispatch<any>
+  country: any;
+  setcountry: React.Dispatch<any>;
 }
 
-const LocationStep = ({ airBnbYourHome ,country,setcountry}: LocationStepProps) => {
+const LocationStep = ({
+  airBnbYourHome,
+  country,
+  setcountry,
+}: LocationStepProps) => {
   const dispatch = useDispatch();
   const { getAll } = useCountries();
   const submitHandler = (
@@ -24,11 +28,9 @@ const LocationStep = ({ airBnbYourHome ,country,setcountry}: LocationStepProps) 
     e.preventDefault();
     if (direction == "Next" && !country) {
       return toast.error("Please Choose A Location");
-      
     }
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
-
 
   return (
     <div
@@ -86,7 +88,7 @@ const LocationStep = ({ airBnbYourHome ,country,setcountry}: LocationStepProps) 
               })}
             ></Select>
           </div>
-          <Map latlng={country?.latlng} />
+          {/* <Map latlng={country?.latlng} /> */}
           <div className="flex gap-2 ">
             <input
               onClick={(e) => submitHandler(e, "Back")}

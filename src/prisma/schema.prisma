@@ -34,7 +34,7 @@ model Account {
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String? @db.String
   session_state     String?
 
   user User @relation(fields: [userid], references: [id], onDelete: Cascade)

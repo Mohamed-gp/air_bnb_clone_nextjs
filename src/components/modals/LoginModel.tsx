@@ -1,6 +1,5 @@
 "use client";
-import axios from "axios";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
@@ -8,13 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { IRootState } from "@/redux/store";
 import { signIn, useSession } from "next-auth/react";
-import { authActions } from "@/redux/authSlice/authSlice";
 
 const LoginModel = () => {
-  const { data: session } = useSession();
-  if (session) {
-    console.log(session);
-  }
   const dispatch = useDispatch();
   const loginModelIsOpen = useSelector(
     (state: IRootState) => state.ui.loginModelIsOpen
@@ -29,21 +23,13 @@ const LoginModel = () => {
     if (data.password.trim() == "") {
       return toast.error("password musn't be empty");
     }
+      const response = await signIn("credentials", { ...data, redirect: false });
+      if (response?.error) {
+        return toast.error(response?.status)
+        
+      }
+      toast.success(response?.status)
 
-    const response = await signIn("credentials", { ...data, redirect: false });
-    console.log(response)
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:3000/api/auth/login",
-    //     data
-    //   );
-    //   toast.success(response.data.message);
-    //   dispatch(authActions.login(response.data.data));
-    //   dispatch(uiActions.setLoginModelIsOpen(false));
-    // } catch (error) {
-    //   toast.error(error.response.data.message);
-    //   console.log(error.response.data.message);
-    // }
   };
   // states to get the values of the form
   const [data, setdata] = useState({ email: "", password: "" });
@@ -112,7 +98,7 @@ const LoginModel = () => {
             </div>
             <input
               type="submit"
-              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
+              className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide cursor-pointer"
             />
           </form>
           <div className="flex flex-col gap-3 pb-8">
