@@ -1,17 +1,26 @@
 import EmptyListings from "./EmptyListings";
 import IndividualListing from "./IndividualListing";
+import { headers } from "next/headers";
 
-const result = await fetch("http://localhost:3000/api/listings",{
-  cache: "no-cache",
-});
-const data = await result.json();
 
-const AllListings = () => {
+interface IListingsParams {
+  category? : string 
+}
+
+
+const AllListings = async ({ category } : IListingsParams) => {
+  const headersList = headers();
+  const domain = headersList.get("host") || "";
+
+
+  let url = "http:" + domain + "/api/listings/?category=" + category;
+  const result = await fetch(url);
+  const data = await result.json();
   return (
     <>
       {data.length > 0 ? (
         <div className="container my-6 flex gap-10 gap-y-2 justify-center  items-center  flex-wrap">
-          {data.map((property : any) => (
+          {data.map((property: any) => (
             <IndividualListing
               id={property.id}
               title={property.title}

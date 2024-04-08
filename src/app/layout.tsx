@@ -27,9 +27,11 @@ export default async function RootLayout({
 
   return (
     
-      <html lang="en">
+      <html lang="en" >
         <NextAuthProvider>  
-          <body className={`${poppins.className} relative`}>
+          {/* supress hydration problem because of extension problem this is description of the problem 
+          url : https://stackoverflow.com/questions/75337953/what-causes-nextjs-warning-extra-attributes-from-the-server-data-new-gr-c-s-c */}
+          <body className={`${poppins.className} relative`} suppressHydrationWarning={true}>
             <StoreProvider>
               <Header />
               <InitialUserData userData={userDataFromServer} />

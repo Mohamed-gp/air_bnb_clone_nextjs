@@ -1,6 +1,6 @@
 import { createListingVerify } from "@/joi/joi";
 import prisma from "@/lib/dbClient";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, URLPattern } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
@@ -21,6 +21,15 @@ export const POST = async (req: NextRequest) => {
 };
 
 export const GET = async (req: NextRequest) => {
-  const listings = await prisma.listing.findMany();
+  let query = {};
+  const category = req.nextUrl.searchParams.get("category");
+  if (category && category != "undefined") {
+    query = {
+      category: category,
+    };
+  }
+  const listings = await prisma.listing.findMany({
+    where: query,
+  });
   return NextResponse.json(listings, { status: 200 });
 };
