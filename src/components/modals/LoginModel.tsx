@@ -1,18 +1,14 @@
 "use client";
 import { useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { IRootState } from "@/redux/store";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const LoginModel = () => {
   const dispatch = useDispatch();
-  const loginModelIsOpen = useSelector(
-    (state: IRootState) => state.ui.loginModelIsOpen
-  );
 
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -23,22 +19,20 @@ const LoginModel = () => {
     if (data.password.trim() == "") {
       return toast.error("password musn't be empty");
     }
-      const response = await signIn("credentials", { ...data, redirect: false });
-      if (response?.error) {
-        return toast.error(response?.status)
-        
-      }
-      toast.success(response?.status)
-
+    const response = await signIn("credentials", { ...data, redirect: false });
+    dispatch(uiActions.setLoginModelIsOpen(false));
+    if (response?.error) {
+      return toast.error(response?.status);
+    }
+    toast.success(response?.status);
   };
   // states to get the values of the form
   const [data, setdata] = useState({ email: "", password: "" });
   return (
     <>
       <div
-        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen ${
-          loginModelIsOpen ? "animation-on-show " : "hidden"
-        }`}
+        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen
+         animation-on-show`}
       >
         <div
           className={`login-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}

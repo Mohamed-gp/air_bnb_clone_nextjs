@@ -5,9 +5,9 @@ import Header from "@/components/header/Header";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "@/redux/Provider";
 import NextAuthProvider from "./NextAuthProvider";
+import getCurrentUser from "./actions/GetCurrentUserState";
+import InitialUserData from "@/components/initialUserData/InitialUserData";
 
-
-import getCurrentUser from "@/app/actions/GetCurrentUserState"
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
@@ -23,19 +23,22 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const userSessionData = await getCurrentUser()
-  console.log(userSessionData)
+  const userDataFromServer = await getCurrentUser();
+
   return (
-    <html lang="en">
-      <body className={`${poppins.className} relative`}>
-        <NextAuthProvider>
-          <StoreProvider>
-            <Header />
-            <Toaster position="top-center" />
-            {children}
-          </StoreProvider>
+    
+      <html lang="en">
+        <NextAuthProvider>  
+          <body className={`${poppins.className} relative`}>
+            <StoreProvider>
+              <Header />
+              <InitialUserData userData={userDataFromServer} />
+              <Toaster position="top-center" />
+              {children}
+            </StoreProvider>
+          </body>
         </NextAuthProvider>
-      </body>
-    </html>
+      </html>
+  
   );
 }

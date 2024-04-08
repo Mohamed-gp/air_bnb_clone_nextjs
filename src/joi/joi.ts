@@ -32,13 +32,13 @@ const createListingVerify = (obj:authBody) => {
         title : joi.string().min(5).max(50).trim().required(),
         description : joi.string().min(5).max(50).trim().required(),
         price : joi.number().min(5).max(50).required(),
-        imageSrc : joi.string().min(5).max(50).trim().required(),
+        imageSrc : joi.string().min(5).trim().required(),
         userId: joi.string().min(5).max(50).trim().required(),
-        // locationValue : joi
+        locationValue: joi.string().min(5).max(50).trim().required(),
         // user id
         guestCount : joi.number().min(1).max(50).required(),
         roomCount : joi.number().min(1).max(50).required(),
-        bathrooomCount : joi.number().min(1).max(50).required(),
+        bathroomCount : joi.number().min(1).max(50).required(),
         category : joi.string().min(5).max(50).trim().required(),
 
     })

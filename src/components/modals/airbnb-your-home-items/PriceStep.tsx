@@ -1,14 +1,13 @@
 "use client";
 
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import React, { useState } from "react";
-import { FaDollarSign, FaMinus, FaPlus, FaX } from "react-icons/fa6";
+import { FaDollarSign, FaX } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import axios from "axios";
+import { IRootState } from "@/redux/store";
 
 interface PriceStepProps {
-  airBnbYourHome: number;
   title: string;
   settitle: React.Dispatch<React.SetStateAction<string>>;
   description: string;
@@ -24,7 +23,6 @@ interface PriceStepProps {
 }
 
 const PriceStep = ({
-  airBnbYourHome,
   chosedCategory,
   country,
   settitle,
@@ -46,7 +44,7 @@ const PriceStep = ({
     e.preventDefault();
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
-  // const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state:IRootState) => state.auth.user);
 
   // form submit handler post method to add property
   const lastFormSubmitHandler = async (
@@ -56,9 +54,10 @@ const PriceStep = ({
     if (!price || !title || !description) {
       return toast.error("Please Fill All Information");
     }
+    
     const dataToSubmit = {
       category: chosedCategory,
-      locationValue: country.label,
+      locationValue: country.label ,
       guestCount: guestsCount,
       roomCount: roomsCount,
       bathroomCount: bathroomsCount,
@@ -66,8 +65,9 @@ const PriceStep = ({
       title,
       description,
       price: +price,
-      userId: "user id here",
+      userId: user?.id,
     };
+    console.log(dataToSubmit);
     try {
       const { data } = await axios.post("/api/listings", dataToSubmit);
       toast.success("Property Added Successfully");
@@ -79,9 +79,7 @@ const PriceStep = ({
   };
   return (
     <div
-      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen ${
-        airBnbYourHome == 4 ? "animation-on-show " : "hidden"
-      }`}
+      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen animation-on-show`}
     >
       <div
         className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}

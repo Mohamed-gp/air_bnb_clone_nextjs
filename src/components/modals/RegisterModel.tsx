@@ -4,16 +4,13 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaX } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { IRootState } from "@/redux/store";
 import { signIn } from "next-auth/react";
 
 const RegisterModel = () => {
   const dispatch = useDispatch();
-  const registerModelIsOpen = useSelector(
-    (state: IRootState) => state.ui.registerModelIsOpen
-  );
+
   // useEffect to hide the model   when click outside the model
 
   // submit handler for the form
@@ -48,9 +45,7 @@ const RegisterModel = () => {
   return (
     <>
       <div
-        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen ${
-          registerModelIsOpen ? "animation-on-show" : "hidden"
-        }`}
+        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen animation-on-show`}
       >
         <div
           className={`register-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}

@@ -5,20 +5,18 @@ import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
-import Map from "@/components/map/Map";
-import { toast } from "react-toastify";
+// import Map from "@/components/map/Map";
+import { toast } from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+
 
 interface LocationStepProps {
-  airBnbYourHome: number;
   country: any;
   setcountry: React.Dispatch<any>;
 }
 
-const LocationStep = ({
-  airBnbYourHome,
-  country,
-  setcountry,
-}: LocationStepProps) => {
+const LocationStep = ({ country, setcountry }: LocationStepProps) => {
   const dispatch = useDispatch();
   const { getAll } = useCountries();
   const submitHandler = (
@@ -32,14 +30,17 @@ const LocationStep = ({
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
 
+  const Map = dynamic(() => import("@/components/map/Map"), {
+    loading: () => <p className="text-center font-bold my-10">loading...</p>,
+    ssr: false
+  })
   return (
     <div
-      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen ${
-        airBnbYourHome == 1 ? "animation-on-show " : "hidden"
-      }`}
+      className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen 
+          animation-on-show"
     >
       <div
-        className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}
+        className="w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]"
       >
         <div className="relative py-4 border-b-[#0000003b]/10 border-b-2">
           <p className="text-center font-bold text-sm">Airbnb You Home!</p>
@@ -88,7 +89,7 @@ const LocationStep = ({
               })}
             ></Select>
           </div>
-          {/* <Map latlng={country?.latlng} /> */}
+          <Map latlng={country?.latlng} />
           <div className="flex gap-2 ">
             <input
               onClick={(e) => submitHandler(e, "Back")}

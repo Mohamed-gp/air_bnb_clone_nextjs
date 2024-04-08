@@ -1,22 +1,17 @@
 "use client";
 
-import { CldUploadWidget } from "next-cloudinary";
-import Counter from "@/components/counter/Counter";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { useState } from "react";
-import { FaMinus, FaPlus, FaX } from "react-icons/fa6";
+import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import ImageUpload from "@/components/cloudinary/ImageUpload";
 
-interface ImagesStepProps{
-    airBnbYourHome:number;
-    imagesrc: string | null;
-    setimagesrc:React.Dispatch<React.SetStateAction<any>>;
-    
+interface ImagesStepProps {
+  imagesrc: string | null;
+  setimagesrc: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const ImagesStep = ({ airBnbYourHome,imagesrc,setimagesrc } : ImagesStepProps) => {
+const ImagesStep = ({ imagesrc, setimagesrc }: ImagesStepProps) => {
   const dispatch = useDispatch();
 
   const submitHandler = (
@@ -26,15 +21,12 @@ const ImagesStep = ({ airBnbYourHome,imagesrc,setimagesrc } : ImagesStepProps) =
     e.preventDefault();
     if (direction == "Next" && imagesrc == null) {
       return toast.error("Please Upload An Image");
-        
     }
     dispatch(uiActions.setAirBnbYourHomeType(direction));
   };
   return (
     <div
-      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen ${
-        airBnbYourHome == 3 ? "animation-on-show " : "hidden"
-      }`}
+      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen animation-on-show`}
     >
       <div
         className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}
@@ -54,7 +46,7 @@ const ImagesStep = ({ airBnbYourHome,imagesrc,setimagesrc } : ImagesStepProps) =
             Show Your Guests How Your House Look Like
           </p>
           <div className="flex flex-col gap-3 my-3">
-            <ImageUpload  imagesrc={imagesrc} setimagesrc={setimagesrc}/>
+            <ImageUpload imagesrc={imagesrc} setimagesrc={setimagesrc} />
           </div>
           <div className="flex gap-2 ">
             <input

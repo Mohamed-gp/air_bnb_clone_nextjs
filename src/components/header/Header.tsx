@@ -1,7 +1,6 @@
 import LeftHeader from "./LeftHeader";
 import CenterHeader from "./CenterHeader";
 import RightHeader from "./RightHeader";
-import { useSession } from "next-auth/react";
 
 const Header = async () => {
   return (

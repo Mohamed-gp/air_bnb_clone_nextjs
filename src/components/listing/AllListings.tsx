@@ -1,8 +1,9 @@
-import Image from "next/image";
 import EmptyListings from "./EmptyListings";
 import IndividualListing from "./IndividualListing";
 
-const result = await fetch("http://localhost:3000/api/listings");
+const result = await fetch("http://localhost:3000/api/listings",{
+  cache: "no-cache",
+});
 const data = await result.json();
 
 const AllListings = () => {
@@ -17,6 +18,7 @@ const AllListings = () => {
               imageSrc={property.imageSrc}
               description={property.description}
               price={property.price}
+              key={property.id}
             />
           ))}
         </div>

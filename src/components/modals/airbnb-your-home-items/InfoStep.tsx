@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 interface InfoStepProps {
-  airBnbYourHome: number;
   guestsCount: number;
   setguestsCount: React.Dispatch<React.SetStateAction<number>>;
   roomsCount: number;
@@ -18,7 +17,6 @@ interface InfoStepProps {
 }
 
 const InfoStep = ({
-  airBnbYourHome,
   guestsCount,
   setguestsCount,
   roomsCount,
@@ -38,9 +36,9 @@ const InfoStep = ({
 
   return (
     <div
-      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen ${
-        airBnbYourHome == 2 ? "animation-on-show " : "hidden"
-      }`}
+      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen
+         animation-on-show
+        `}
     >
       <div
         className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}

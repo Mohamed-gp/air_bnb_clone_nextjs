@@ -4,16 +4,14 @@ import { categories } from "@/utils/categories";
 import { useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 interface CategoriesStepProps {
-  airBnbYourHome: number;
   chosedCategory: string;
   setchosedCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CategoriesStep = ({
-  airBnbYourHome,
   chosedCategory,
   setchosedCategory,
 }: CategoriesStepProps) => {
@@ -32,9 +30,7 @@ const CategoriesStep = ({
 
   return (
     <div
-      className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen ${
-        airBnbYourHome == 0 ? "animation-on-show " : "hidden"
-      }`}
+      className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen animation-on-show"
     >
       <div
         className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}
@@ -78,7 +74,7 @@ const CategoriesStep = ({
           <input
             type="submit"
             value="Next"
-            className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide"
+            className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide cursor-pointer"
           />
         </form>
       </div>

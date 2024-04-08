@@ -18,11 +18,10 @@ interface MapProps {
   latlng: L.LatLngExpression;
 }
 
-
 const Map = ({ latlng }: MapProps) => {
   return (
     <>
-      {latlng ? (
+      {latlng && (
         <MapContainer
           center={latlng}
           doubleClickZoom={false}
@@ -36,7 +35,7 @@ const Map = ({ latlng }: MapProps) => {
           />
           <Marker position={latlng}></Marker>
         </MapContainer>
-      ) : null}
+      )}
     </>
   );
 };

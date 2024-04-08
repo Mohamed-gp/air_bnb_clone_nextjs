@@ -4,18 +4,21 @@ import { FaBars } from "react-icons/fa6";
 import RegisterModel from "../modals/RegisterModel";
 import AuthMenu from "./AuthMenu";
 import LoginModel from "../modals/LoginModel";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { IRootState } from "@/redux/store";
 import { useSession } from "next-auth/react";
-import { authActions } from "@/redux/authSlice/authSlice";
-import { useEffect } from "react";
 import AirbnbYourHomeModel from "../modals/AirbnbYourHomeModel";
+import { IRootState } from "@/redux/store";
 
 const RightHeader = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const registerModelIsOpen = useSelector(
+    (state: IRootState) => state.ui.registerModelIsOpen
+  );
+  const loginModelIsOpen = useSelector(
+    (state: IRootState) => state.ui.loginModelIsOpen
+  );
 
   return (
     <>
@@ -40,9 +43,9 @@ const RightHeader = () => {
           <AuthMenu />
         </div>
       </div>
-      <RegisterModel />
+      {registerModelIsOpen && <RegisterModel />}
+      {loginModelIsOpen && <LoginModel />}
       <AirbnbYourHomeModel />
-      <LoginModel />
     </>
   );
 };

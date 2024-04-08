@@ -4,11 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  //   to do joi error handler
-  //     const {error} = createListingVerify(body)
-  //     if (error) {
-  //       return NextResponse.json({message : error.details[0].message}, {status : 400})
-  //     }
+  const { error } = createListingVerify(body);
+  if (error) {
+    return NextResponse.json(
+      { message: error.details[0].message },
+      { status: 400 }
+    );
+  }
   const property = await prisma.listing.create({
     data: body,
   });

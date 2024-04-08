@@ -18,18 +18,16 @@ const IndividualListing = ({
   price,
   id,
 }: IndividualListingProps) => {
-  const router = useRouter();
   return (
-    <div
-      className="flex h-[280px] flex-col w-[250px] group"
-    >
-      <div className="h-[160px] w-[250px]  relative rounded-3xl overflow-hidden">
+    <div className="flex h-[280px] flex-col w-[250px] group">
+      <div className="h-[160px] w-[250px]  relative rounded-3xl overflow-hidden cursor-pointer">
         <Image
           src={imageSrc}
-          width={250}
-          height={160}
           alt={title}
-          className="rounded-3xl group-hover:scale-110 duration-500"
+          fill
+          sizes="100%"
+          quality={100}
+          className="rounded-3xl group-hover:scale-110 duration-500 w-auto h-auto object-cover  "
         />
         <HeartIndividual houseId={id} />
       </div>
