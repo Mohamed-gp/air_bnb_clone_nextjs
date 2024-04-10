@@ -29,17 +29,17 @@ const loginVerify = (obj:authBody) => {
 // const create listing loginVerify 
 const createListingVerify = (obj:authBody) => {
     const schema = joi.object({
-        title : joi.string().min(5).max(50).trim().required(),
-        description : joi.string().min(5).max(50).trim().required(),
-        price : joi.number().min(5).max(50).required(),
-        imageSrc : joi.string().min(5).trim().required(),
+        title : joi.string().min(5).max(20).trim().required(),
+        description : joi.string().min(5).max(300).trim().required(),
+        price : joi.number().min(5).max(10000).required(),
+        imageSrc : joi.string().trim().required(),
         userId: joi.string().min(5).max(50).trim().required(),
-        locationValue: joi.string().min(5).max(50).trim().required(),
+        locationValue: joi.string().trim().required(),
         // user id
         guestCount : joi.number().min(1).max(50).required(),
         roomCount : joi.number().min(1).max(50).required(),
         bathroomCount : joi.number().min(1).max(50).required(),
-        category : joi.string().min(5).max(50).trim().required(),
+        category : joi.string().trim().required(),
 
     })
     return schema.validate(obj)

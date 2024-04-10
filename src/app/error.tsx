@@ -3,18 +3,16 @@
 import Link from "next/link";
 
 interface ErrorPageProps {
-    error : Error,
-    reset : () => void
+  error: Error;
+  reset: () => void;
 }
 
-
-
-const ErrorPage = ({error , reset} : ErrorPageProps) => {
-  console.log(error)
+const ErrorPage = ({ error, reset }: ErrorPageProps) => {
+  console.log(error);
   return (
     <>
       <div>Something Went Wrong</div>
-      <p >title : {error.message}</p>
+      <p>title : {error.message}</p>
       <button onClick={() => reset()}>Try Again</button>
       <Link href="/">Go to Home Page</Link>
     </>

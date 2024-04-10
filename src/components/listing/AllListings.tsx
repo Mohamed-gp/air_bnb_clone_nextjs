@@ -14,10 +14,12 @@ const AllListings = async ({ category } : IListingsParams) => {
 
 
   let url = "http:" + domain + "/api/listings/?category=" + category;
-  const result = await fetch(url);
+  const result = await fetch(url,{cache : "reload"});
   const data = await result.json();
+
   return (
     <>
+    
       {data.length > 0 ? (
         <div className="container my-6 flex gap-10 gap-y-2 justify-center  items-center  flex-wrap">
           {data.map((property: any) => (

@@ -20,11 +20,12 @@ const LoginModel = () => {
       return toast.error("password musn't be empty");
     }
     const response = await signIn("credentials", { ...data, redirect: false });
+
     dispatch(uiActions.setLoginModelIsOpen(false));
     if (response?.error) {
-      return toast.error(response?.status);
+      return toast.error(response?.error);
     }
-    toast.success(response?.status);
+    toast.success("SignIn Succeful")
   };
   // states to get the values of the form
   const [data, setdata] = useState({ email: "", password: "" });

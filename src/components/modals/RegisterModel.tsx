@@ -27,15 +27,14 @@ const RegisterModel = () => {
     }
     try {
       const result = await axios.post("/api/auth/register", data);
-      
       toast.success(result.data.message, {
         style: {
           fontSize: "12px",
         },
       });
-      console.log(result.data);
       dispatch(uiActions.setRegisterModelIsOpen(false));
     } catch (error) {
+      console.log(error)
       toast.error(error.response.data.message);
       console.log(error.response.data.message);
     }

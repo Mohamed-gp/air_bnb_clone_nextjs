@@ -27,12 +27,12 @@ export const POST = async (req: NextRequest) => {
   const newUser = await prisma.user.create({
     data: {
       email,
-      username,
+      name : username,
       hashedPassword: await bcrypt.hash(password, 10),
     },
     select: {
       email: true,
-      username: true,
+      name: true,
       id: true,
     },
   });

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    user: {} as any,
   },
   reducers: {
     setCredentials(state, action) {
@@ -12,7 +12,14 @@ const authSlice = createSlice({
     },
     logout(state) {
       state.user = null;
-      // localStorage.removeItem("user");
+    },
+    wishlistToggle(state, action) {
+      const { listingId } = action.payload;
+      if (state?.user?.favoriteIds?.indexOf(listingId) != -1) {
+        state.user.favoriteIds = state.user.favoriteIds.filter((id) => id != listingId);
+      } else {
+        state.user.favoriteIds.push(listingId);
+      }
     },
   },
 });
