@@ -28,8 +28,18 @@ export async function POST(
   return NextResponse.json(
     {
       message: "success",
+      data : null
     },
     { status: 200 }
   );
 }
 
+
+export async function GET(req : NextRequest,{params} : {params : {listingId : string}}) {
+  const {listingId} = params
+  const listing = await prisma.listing.findUnique({
+    where: {id : listingId},
+    
+  })
+  return NextResponse.json({data : listing,message : "success"},{status : 200})
+} 

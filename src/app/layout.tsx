@@ -8,6 +8,8 @@ import NextAuthProvider from "./NextAuthProvider";
 import getCurrentUser from "./actions/GetCurrentUserState";
 import InitialUserData from "@/components/initialUserData/InitialUserData";
 
+
+
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
@@ -24,11 +26,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const userDataFromServer = await getCurrentUser();
+  
 
   return (
-    
+
       <html lang="en" >
-        <NextAuthProvider>  
+        <NextAuthProvider>
+
           {/* supress hydration problem because of extension problem this is description of the problem 
           url : https://stackoverflow.com/questions/75337953/what-causes-nextjs-warning-extra-attributes-from-the-server-data-new-gr-c-s-c */}
           <body className={`${poppins.className} relative`} suppressHydrationWarning={true}>

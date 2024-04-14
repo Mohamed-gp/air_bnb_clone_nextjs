@@ -11,7 +11,7 @@ const formatedCountries = countries.map((country) => ({
 const useCountries = () => {
   const getAll = () => formatedCountries;
   const getByValue = (value: string) =>
-    formatedCountries.find((country) => country.value === value);
+    formatedCountries.find((country) => country.label === value);
   return { getAll, getByValue };
 };
 

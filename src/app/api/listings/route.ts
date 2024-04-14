@@ -30,6 +30,9 @@ export const GET = async (req: NextRequest) => {
   }
   const listings = await prisma.listing.findMany({
     where: query,
+    orderBy : {
+      createdAt : "desc"
+    }
   });
-  return NextResponse.json(listings, { status: 200 });
+  return NextResponse.json({data : listings}, { status: 200 });
 };

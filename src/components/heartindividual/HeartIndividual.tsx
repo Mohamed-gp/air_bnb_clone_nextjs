@@ -28,7 +28,7 @@ const HeartIndividual = ({ houseId }: HeartIndividualProps) => {
   return (
     <>
       {userInfo?.favoriteIds && (
-        <div onClick={() => addToWishListHandler()}>
+        <div onClick={(e) => {e.preventDefault();addToWishListHandler()}}>
           {userInfo?.favoriteIds?.indexOf(houseId) != -1 ? (
             <>
               <FaHeart

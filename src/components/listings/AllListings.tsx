@@ -15,7 +15,7 @@ const AllListings = async ({ category } : IListingsParams) => {
 
   let url = "http:" + domain + "/api/listings/?category=" + category;
   const result = await fetch(url,{cache : "reload"});
-  const data = await result.json();
+  const {data} = await result.json();
 
   return (
     <>

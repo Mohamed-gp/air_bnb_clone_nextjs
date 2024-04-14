@@ -15,10 +15,11 @@ L.Icon.Default.mergeOptions({
 });
 
 interface MapProps {
-  latlng: L.LatLngExpression;
+  latlng: [number,number];
 }
 
 const Map = ({ latlng }: MapProps) => {
+  console.log(latlng)
   return (
     <>
       {latlng && (

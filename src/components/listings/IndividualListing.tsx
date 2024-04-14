@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import HeartIndividual from "../heartindividual/HeartIndividual";
+import Link from "next/link";
 
 interface IndividualListingProps {
   title: string;
@@ -20,7 +21,7 @@ const IndividualListing = ({
 }: IndividualListingProps) => {
   
   return (
-    <div className="flex h-[280px] flex-col w-[250px] group">
+    <Link href={`/listings/${id}`} className="flex h-[280px] flex-col w-[250px] group">
       <div className="h-[250px] w-[250px]  relative rounded-3xl overflow-hidden cursor-pointer">
         <Image
           src={imageSrc}
@@ -39,7 +40,8 @@ const IndividualListing = ({
         </div>
         <p className="font-bold line-clamp-1">${price}</p>
       </div>
-    </div>
+      
+    </Link>
   );
 };
 export default IndividualListing;

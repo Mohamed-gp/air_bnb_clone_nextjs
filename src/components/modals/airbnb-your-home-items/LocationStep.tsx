@@ -34,6 +34,7 @@ const LocationStep = ({ country, setcountry }: LocationStepProps) => {
     loading: () => <p className="text-center font-bold my-10">loading...</p>,
     ssr: false
   })
+
   return (
     <div
       className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen 

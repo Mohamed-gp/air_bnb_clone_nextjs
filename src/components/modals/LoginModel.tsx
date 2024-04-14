@@ -25,7 +25,7 @@ const LoginModel = () => {
     if (response?.error) {
       return toast.error(response?.error);
     }
-    toast.success("SignIn Succeful")
+    console.log(response)
   };
   // states to get the values of the form
   const [data, setdata] = useState({ email: "", password: "" });

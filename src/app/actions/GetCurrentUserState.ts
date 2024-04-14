@@ -6,7 +6,7 @@ export const getSession = async () => {
   return await getServerSession(authOptions);
 };
 
-const getCurrentUser = async () => {
+const getCurrentUser= async () => {
   try {
     const session = await getSession();
     if (!session?.user?.email) {
@@ -16,6 +16,9 @@ const getCurrentUser = async () => {
       where: {
         email: session?.user?.email as string,
       },
+      select : {
+        hashedPassword : false
+      }
     });
     if (!user) {
       return null;
