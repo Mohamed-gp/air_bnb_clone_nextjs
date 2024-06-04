@@ -11,7 +11,7 @@ const InitialUserData = ({ userData }: any) => {
   useEffect(() => {
     // to iso string
     dispatch(authActions.setCredentials({...userData,createdAt : JSON.stringify(userData?.createdAt),updatedAt : JSON.stringify(userData?.updatedAt)}));
-  }, []);
+  }, [userData]);
 
   return <></>;
 };

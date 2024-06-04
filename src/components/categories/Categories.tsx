@@ -32,7 +32,7 @@ const Categories = () => {
 
 
   return (
-    <div className="container flex gap-6 overflow-x-auto py-2 my-3 pb-7 items-center">
+    <div className="container flex gap-6 overflow-x-auto py-2 my-3 pb-7 items-center justify-center">
       {categories.map((category, index) => (
         <div
           key={index}

@@ -4,12 +4,14 @@
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
-import {} from "date-fns"
+import { useState } from "react";
+// import {} from "date-fns"
 
 interface UserHosterInfoInterface {
-  userHosterInfo : {name: string | null;
-  image: string | null;
-  reservations: {
+  userHosterInfo: {
+    name: string | null;
+    image: string | null;
+    reservations: {
       id: string;
       userId: string;
       listingId: string;
@@ -17,19 +19,27 @@ interface UserHosterInfoInterface {
       endDate: Date;
       totalPrice: number;
       createdAt: Date;
-}[]}
+    }[];
+  };
 }
 
-interface ReservationCalendarProps{
-    userHosterInfo : UserHosterInfoInterface
+interface ReservationCalendarProps {
+  userHosterInfo: UserHosterInfoInterface;
 }
 
-const ReservationCalendar = ({ userHosterInfo } : ReservationCalendarProps ) => {
+const ReservationCalendar = ({ userHosterInfo }: ReservationCalendarProps) => {
   const selectionRange = {
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   };
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: "selection",
+    },
+  ]);
   /**
    * Represents the initial date selection for the ReservationCalendar component.
    * This object contains the start date, end date, and key for the selection.
@@ -41,12 +51,12 @@ const ReservationCalendar = ({ userHosterInfo } : ReservationCalendarProps ) => 
   };
   // const disabledDates = (startDate,endDate) => {
   //   userHosterInfo?.reservations.forEach(dateRange => {
-  //     const range = 
+  //     const range =
   //   })
   // }
   return (
     <>
-      <div>ReservationCalendar</div>
+      {/* <div>ReservationCalendar</div>
       <DateRange
         rangeColors={["#262626"]}
         ranges={[selectionRange]}
@@ -57,6 +67,12 @@ const ReservationCalendar = ({ userHosterInfo } : ReservationCalendarProps ) => 
         minDate={new Date()}
         // onChange={handleSelect}
         // disabledDates={disabledDates}
+      /> */}
+      <DateRange
+        editableDateInputs={true}
+        onChange={(item) => setState([item.selection])}
+        moveRangeOnFirstSelection={false}
+        ranges={state}
       />
     </>
   );
