@@ -9,7 +9,9 @@ import { signIn } from "next-auth/react";
 
 const LoginModel = () => {
   const dispatch = useDispatch();
-
+  // states to get the values of the form
+  const [data, setdata] = useState({ email: "", password: "" });
+  
   // submit handler for the form
   const submitHandler: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -27,13 +29,11 @@ const LoginModel = () => {
     }
     console.log(response)
   };
-  // states to get the values of the form
-  const [data, setdata] = useState({ email: "", password: "" });
   return (
     <>
       <div
         className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen
-         animation-on-show`}
+         animation-on-show z-10`}
       >
         <div
           className={`login-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}

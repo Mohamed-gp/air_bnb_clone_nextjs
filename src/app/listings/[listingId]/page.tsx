@@ -4,11 +4,18 @@ import prisma from "@/lib/dbClient";
 import { categories } from "@/utils/categories";
 import { MapIndividulaListing } from "@/components/mapIndividulaListing/MapIndividulaListing";
 import ReservationCalendar from "@/components/reservation/ReservationCalendar";
+import { getSession } from "@/app/actions/GetCurrentUserState";
+import {Fragment} from "react";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Invoices | Acme Dashboard',
+};
 
-
-
-const page = async ({ params }: { params: { listingId: string } }) => {
+const page = async ({ params }: any) => {
   const { listingId } = params;
+
+  const session = await getSession();
   const result = await fetch(`http://localhost:3000/api/listings/${listingId}`);
   const { data } = await result.json();
   const userHosterInfo = await prisma.user.findUnique({
@@ -19,14 +26,11 @@ const page = async ({ params }: { params: { listingId: string } }) => {
       hashedPassword: false,
       name: true,
       image: true,
-      reservations : true
+      reservations: true,
     },
   });
 
   // disabledDates
-
-  
-  
 
   return (
     <div className="container my-12">
@@ -81,12 +85,12 @@ const page = async ({ params }: { params: { listingId: string } }) => {
           quality={100}
           className="rounded-3xl group-hover:scale-110 duration-500 w-auto h-auto object-cover"
         />
-        <HeartIndividual houseId={data.id} />
+        {session && <HeartIndividual houseId={data.id} />}
       </div>
 
       {categories.map((category) => {
         return (
-          <>
+          <Fragment key={new Date().getTime() * category.description.length}>
             {category.label == data.category && (
               <div className="flex flex-col items-center justify-center my-8 border-y py-4">
                 <category.icon size={30} />
@@ -96,14 +100,14 @@ const page = async ({ params }: { params: { listingId: string } }) => {
                 </p>
               </div>
             )}
-          </>
+          </Fragment>
         );
       })}
 
       <div className="my-16">
         <MapIndividulaListing locationValue={data?.locationValue as string} />
       </div>
-      <ReservationCalendar userHosterInfo={userHosterInfo}/>
+      <ReservationCalendar userHosterInfo={userHosterInfo?.name}/>
     </div>
   );
 };

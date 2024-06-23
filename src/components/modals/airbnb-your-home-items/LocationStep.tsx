@@ -1,7 +1,6 @@
 "use client";
 import useCountries from "@/hooks/useCountries";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { useEffect, useState } from "react";
 import { FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
@@ -38,7 +37,7 @@ const LocationStep = ({ country, setcountry }: LocationStepProps) => {
   return (
     <div
       className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen 
-          animation-on-show"
+          animation-on-show z-10"
     >
       <div
         className="w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]"

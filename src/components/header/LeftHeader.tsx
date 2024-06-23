@@ -5,6 +5,7 @@ import logoImg from "@/../public/images/logo.png";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { useDispatch } from "react-redux";
 
+
 const LeftHeader = () => {
   const dispatch = useDispatch();
   return (
@@ -17,4 +18,5 @@ const LeftHeader = () => {
     </Link>
   );
 };
+
 export default LeftHeader;

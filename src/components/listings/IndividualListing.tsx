@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import HeartIndividual from "../heartindividual/HeartIndividual";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { IRootState } from "@/redux/store";
 
 interface IndividualListingProps {
   title: string;
@@ -19,9 +20,12 @@ const IndividualListing = ({
   price,
   id,
 }: IndividualListingProps) => {
-  
+  const userInfo = useSelector((state: IRootState) => state.auth.user);
   return (
-    <Link href={`/listings/${id}`} className="flex h-[280px] flex-col w-[250px] group">
+    <Link
+      href={`/listings/${id}`}
+      className="flex h-[280px] flex-col w-[250px] group"
+    >
       <div className="h-[250px] w-[250px]  relative rounded-3xl overflow-hidden cursor-pointer">
         <Image
           src={imageSrc}
@@ -31,7 +35,7 @@ const IndividualListing = ({
           quality={100}
           className="rounded-3xl group-hover:scale-110 duration-500 w-auto h-auto object-cover  "
         />
-        <HeartIndividual houseId={id}/>
+        {userInfo && <HeartIndividual houseId={id} />}
       </div>
       <div className="flex items-center justify-between max-w-[300px] px-2 my-2">
         <div className="flex flex-col w-[70%]">
@@ -40,7 +44,6 @@ const IndividualListing = ({
         </div>
         <p className="font-bold line-clamp-1">${price}</p>
       </div>
-      
     </Link>
   );
 };

@@ -17,7 +17,7 @@ export async function POST(
   user?.favoriteIds.find((id) => id == listingId)
   ? (user.favoriteIds = user.favoriteIds.filter((id) => id != listingId))
   : user?.favoriteIds.push(listingId);
-  const userUpdate = await prisma.user.update({
+  const userUpdated = await prisma.user.update({
     where: {
       id: userId,
     },
@@ -27,7 +27,7 @@ export async function POST(
   });
   return NextResponse.json(
     {
-      message: "success",
+      message: "toggled successfuly",
       data : null
     },
     { status: 200 }

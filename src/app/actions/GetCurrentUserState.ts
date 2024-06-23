@@ -6,7 +6,7 @@ export const getSession = async () => {
   return await getServerSession(authOptions);
 };
 
-const getCurrentUser= async () => {
+const getCurrentUser = async () => {
   try {
     const session = await getSession();
     if (!session?.user?.email) {
@@ -14,12 +14,22 @@ const getCurrentUser= async () => {
     }
     const user = await prisma.user.findUnique({
       where: {
-        email: session?.user?.email as string,
+        email: session?.user?.email,
       },
-      select : {
-        hashedPassword : false
+      select:{
+        id : true ,
+        name : true ,
+        email : true ,
+        emailVerified : true ,
+        image : true ,
+        hashedPassword : false ,
+        createdAt : true ,
+        updatedAt : true ,
+        favoriteIds : true
       }
     });
+    
+
     if (!user) {
       return null;
     }

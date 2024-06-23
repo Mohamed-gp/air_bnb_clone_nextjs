@@ -1,22 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { IconType } from "react-icons/lib";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { categories } from "@/utils/categories";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "@/redux/store";
+import { uiActions } from "@/redux/uiSlice/uiSlice";
 
 
 
 const Categories = () => {
+  // for logo click problem
+
+  const dispatch = useDispatch()
   const CategoryLogoClick = useSelector((state:IRootState) => state.ui.CategoryLogoClick);
   const router = useRouter();
   useEffect(() => {
     if (CategoryLogoClick) {
       setcategoryParams("All");
+      dispatch(uiActions.setCategoryLogoClick(false))
     }
-  }, [CategoryLogoClick,router]);
+  }, [CategoryLogoClick]);
   const [categoryParams, setcategoryParams] = useState(
     useSearchParams().get("category") || "All"
   );
@@ -35,7 +39,7 @@ const Categories = () => {
     <div className="container flex gap-6 overflow-x-auto py-2 my-3 pb-7 items-center justify-center">
       {categories.map((category, index) => (
         <div
-          key={index}
+          key={new Date().getTime() * category.label.length}
           onClick={() => {
             changeCategory(category.label);
           }}

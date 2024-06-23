@@ -29,7 +29,7 @@ const CategoriesStep = ({
   };
 
   return (
-    <div className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen animation-on-show">
+    <div className="fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen animation-on-show z-10">
       <div
         className={` w-[400px] flex flex-col bg-white rounded-lg z-10 overflow-y-auto h-[80vh]`}
       >
@@ -52,7 +52,7 @@ const CategoriesStep = ({
             {categories.map((category,index) => {
               return (
                 <div
-                  key={index}
+                  key={index * new Date().getTime() + 1}
                   onClick={() => {
                     setchosedCategory(category.label);
                   }}

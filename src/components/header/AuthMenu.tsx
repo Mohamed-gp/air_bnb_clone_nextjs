@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
 import { signOut, useSession } from "next-auth/react";
 import { authActions } from "@/redux/authSlice/authSlice";
+import Link from "next/link";
 
 export default function AuthMenu() {
   const dispatch = useDispatch();
@@ -44,9 +45,11 @@ export default function AuthMenu() {
                 <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
                   My Trips
                 </li>
-                <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
-                  My Favorites
-                </li>
+                <Link href="/favorites">
+                  <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
+                    My Favorites
+                  </li>
+                </Link>
                 <li className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500">
                   My Reservations
                 </li>
@@ -64,7 +67,7 @@ export default function AuthMenu() {
                 <li
                   onClick={() => {
                     signOut({ redirect: false });
-                    dispatch(authActions.logout())
+                    dispatch(authActions.logout());
                     toast.success("Logged Out");
                   }}
                   className="text-sm hover:bg-hoverColor w-full px-3 py-1 duration-500"

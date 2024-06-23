@@ -1,24 +1,16 @@
 "use client";
 import Image from "next/image";
 import { FaBars } from "react-icons/fa6";
-import RegisterModel from "../modals/RegisterModel";
 import AuthMenu from "./AuthMenu";
-import LoginModel from "../modals/LoginModel";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { useSession } from "next-auth/react";
-import AirbnbYourHomeModel from "../modals/AirbnbYourHomeModel";
 import { IRootState } from "@/redux/store";
+
 
 const RightHeader = () => {
   const dispatch = useDispatch();
-  const { data: session } = useSession();
-  const registerModelIsOpen = useSelector(
-    (state: IRootState) => state.ui.registerModelIsOpen
-  );
-  const loginModelIsOpen = useSelector(
-    (state: IRootState) => state.ui.loginModelIsOpen
-  );
+  const user = useSelector((state:IRootState) => state.auth.user);
+
 
   return (
     <>
@@ -31,9 +23,7 @@ const RightHeader = () => {
           <div className="size-7 md:block hidden rounded-full overflow-hidden">
             <Image
               src={
-                session?.user?.image
-                  ? session.user.image
-                  : `/images/placeholder.jpg`
+                user?.image || `/images/placeholder.jpg`
               }
               alt="profile-placeholder"
               width={30}
@@ -43,9 +33,7 @@ const RightHeader = () => {
           <AuthMenu />
         </div>
       </div>
-      {registerModelIsOpen && <RegisterModel />}
-      {loginModelIsOpen && <LoginModel />}
-      <AirbnbYourHomeModel />
+
     </>
   );
 };

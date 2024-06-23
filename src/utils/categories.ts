@@ -7,6 +7,7 @@ import {
   GiCaveEntrance,
   GiForestCamp,
   GiIsland,
+  
   GiWindmill,
 } from "react-icons/gi";
 import { FaSkiing } from "react-icons/fa";
@@ -14,7 +15,7 @@ import { BsSnow } from "react-icons/bs";
 import { IoDiamond } from "react-icons/io5";
 import { MdOutlineVilla } from "react-icons/md";
 
-export const categories = [
+export const categories  = [
   {
     label: "Beach",
     icon: TbBeach,
@@ -90,4 +91,4 @@ export const categories = [
     icon: IoDiamond,
     description: "This property is brand new and luxurious!",
   },
-];
+] as const;

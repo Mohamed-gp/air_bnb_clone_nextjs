@@ -10,6 +10,8 @@ import { signIn } from "next-auth/react";
 
 const RegisterModel = () => {
   const dispatch = useDispatch();
+  // states to get the values of the form
+  const [data, setdata] = useState({ username: "", email: "", password: "" });
 
   // useEffect to hide the model   when click outside the model
 
@@ -39,12 +41,10 @@ const RegisterModel = () => {
       console.log(error.response.data.message);
     }
   };
-  // states to get the values of the form
-  const [data, setdata] = useState({ username: "", email: "", password: "" });
   return (
     <>
       <div
-        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen animation-on-show`}
+        className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen h-screen animation-on-show z-10`}
       >
         <div
           className={`register-model  w-[400px] flex flex-col bg-white rounded-lg z-10 `}

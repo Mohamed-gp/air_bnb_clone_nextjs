@@ -7,27 +7,27 @@ import { DateRange } from "react-date-range";
 import { useState } from "react";
 // import {} from "date-fns"
 
-interface UserHosterInfoInterface {
-  userHosterInfo: {
-    name: string | null;
-    image: string | null;
-    reservations: {
-      id: string;
-      userId: string;
-      listingId: string;
-      startDate: Date;
-      endDate: Date;
-      totalPrice: number;
-      createdAt: Date;
-    }[];
-  };
-}
+// interface UserHosterInfoInterface {
+//   userHosterInfo: {
+//     name: string | null;
+//     image: string | null;
+//     reservations: {
+//       id: string;
+//       userId: string;
+//       listingId: string;
+//       startDate: Date;
+//       endDate: Date;
+//       totalPrice: number;
+//       createdAt: Date;
+//     }[];
+//   };
+// }
 
-interface ReservationCalendarProps {
-  userHosterInfo: UserHosterInfoInterface;
-}
+// interface ReservationCalendarProps {
+//   userHosterInfo: UserHosterInfoInterface;
+// }
 
-const ReservationCalendar = ({ userHosterInfo }: ReservationCalendarProps) => {
+const ReservationCalendar = ({ userHosterInfo }: any) => {
   const selectionRange = {
     startDate: new Date(),
     endDate: new Date(),

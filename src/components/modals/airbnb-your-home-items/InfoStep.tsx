@@ -37,7 +37,7 @@ const InfoStep = ({
   return (
     <div
       className={`fixed flex justify-center items-center bg-black/70 left-0 top-0 w-screen overflow-y-scroll h-screen
-         animation-on-show
+         animation-on-show z-10
         `}
     >
       <div
