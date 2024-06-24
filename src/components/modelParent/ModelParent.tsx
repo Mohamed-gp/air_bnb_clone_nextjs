@@ -3,6 +3,7 @@ import { IRootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import RegisterModel from "../modals/RegisterModel";
 import AirbnbYourHomeModel from "../modals/AirbnbYourHomeModel";
+import LoginModel from "../modals/LoginModel";
 
 const ModelParent = () => {
   const registerModelIsOpen = useSelector(
@@ -14,7 +15,7 @@ const ModelParent = () => {
   return (
     <>
       {registerModelIsOpen && <RegisterModel />}
-      {loginModelIsOpen && <RegisterModel />}
+      {loginModelIsOpen && <LoginModel/>}
       <AirbnbYourHomeModel />
     </>
   );

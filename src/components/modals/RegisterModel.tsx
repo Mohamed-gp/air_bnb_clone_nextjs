@@ -126,6 +126,7 @@ const RegisterModel = () => {
             </div>
             <input
               type="submit"
+              value="Register"
               className="text-white bg-mainColor w-full text-center py-2 my-2 rounded-md font-bold tracking-wide cursor-pointer"
             />
           </form>
