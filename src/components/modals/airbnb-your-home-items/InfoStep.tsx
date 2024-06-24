@@ -2,10 +2,8 @@
 
 import Counter from "@/components/counter/Counter";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
-import { useState } from "react";
-import { FaMinus, FaPlus, FaX } from "react-icons/fa6";
+import {  FaX } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 
 interface InfoStepProps {
   guestsCount: number;
@@ -54,7 +52,7 @@ const InfoStep = ({
         </div>
         <form
           className="py-6 px-4 flex flex-col gap-2"
-          onSubmit={(e) => submitHandler(e, "Next")}
+          onSubmit={(e : any) => submitHandler(e, "Next")}
         >
           <p className="font-bold">Share Some Basics About Your Place</p>
           <p className="opacity-60 text-xs">What Ameneties Do You Have</p>
