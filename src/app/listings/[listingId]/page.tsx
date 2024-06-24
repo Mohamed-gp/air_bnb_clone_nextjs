@@ -16,7 +16,7 @@ const page = async ({ params }: any) => {
   const { listingId } = params;
   
   const session = await getSession();
-  const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://renting-house-rho.vercel.app";
+  const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://hoses-renting.vercel.app";
   const result = await fetch(url + `/api/listings/${listingId}`);
   const { data } = await result.json();
   // const userHosterInfo = await prisma.user.findUnique({

@@ -68,7 +68,7 @@ const PriceStep = ({
       userId: user?.id,
     };
     try {
-      const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://renting-house-rho.vercel.app"
+      const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://hoses-renting.vercel.app"
       const { data } = await axios.post("/api/listings", dataToSubmit);
       toast.success("Property Added Successfully");
       dispatch(uiActions.setAirBnbYourHomeType("Remove"));
