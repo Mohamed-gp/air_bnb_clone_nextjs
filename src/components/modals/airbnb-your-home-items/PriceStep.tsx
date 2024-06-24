@@ -57,7 +57,7 @@ const PriceStep = ({
     
     const dataToSubmit = {
       category: chosedCategory,
-      locationValue: country.label ,
+      locationValue: country ,
       guestCount: guestsCount,
       roomCount: roomsCount,
       bathroomCount: bathroomsCount,
@@ -67,7 +67,6 @@ const PriceStep = ({
       price: +price,
       userId: user?.id,
     };
-    console.log(dataToSubmit);
     try {
       const { data } = await axios.post("/api/listings", dataToSubmit);
       toast.success("Property Added Successfully");

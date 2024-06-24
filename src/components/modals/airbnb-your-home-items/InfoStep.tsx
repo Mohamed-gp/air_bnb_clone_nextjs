@@ -3,8 +3,8 @@
 import Counter from "@/components/counter/Counter";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import {  FaX } from "react-icons/fa6";
+import React from "react";
 import { useDispatch } from "react-redux";
-
 interface InfoStepProps {
   guestsCount: number;
   setguestsCount: React.Dispatch<React.SetStateAction<number>>;
