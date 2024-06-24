@@ -16,7 +16,7 @@ const page = async ({ params }: any) => {
   const { listingId } = params;
   
   const session = await getSession();
-  const result = await fetch(`http://localhost:3000/api/listings/${listingId}`);
+  const result = await fetch(`/api/listings/${listingId}`);
   const { data } = await result.json();
   const userHosterInfo = await prisma.user.findUnique({
     where: {

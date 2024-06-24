@@ -28,12 +28,12 @@ import { useState } from "react";
 // }
 
 const ReservationCalendar = ({ userHosterInfo }: any) => {
-  const selectionRange = {
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  };
-  const [state, setState] = useState([
+  // const selectionRange = {
+  //   startDate: new Date(),
+  //   endDate: new Date(),
+  //   key: "selection",
+  // };
+  const [state, setState] = useState<any>([
     {
       startDate: new Date(),
       endDate: null,
