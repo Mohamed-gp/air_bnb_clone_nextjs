@@ -9,7 +9,7 @@ interface ImageUploadProps {
   setimagesrc: React.Dispatch<React.SetStateAction<any>>;
 }
 const ImageUpload = ({ imagesrc, setimagesrc }: ImageUploadProps) => {
-  const handleSubmitImage = (e) => {
+  const handleSubmitImage = (e :any) => {
     setimagesrc(e.info.secure_url);
   };
   return (

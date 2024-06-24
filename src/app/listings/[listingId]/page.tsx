@@ -8,13 +8,13 @@ import { getSession } from "@/app/actions/GetCurrentUserState";
 import {Fragment} from "react";
 import { Metadata } from 'next';
  
-export const metadata: Metadata = {
-  title: 'Invoices | Acme Dashboard',
-};
 
+export const metadata: Metadata = {
+  title: 'Listing ',
+};
 const page = async ({ params }: any) => {
   const { listingId } = params;
-
+  
   const session = await getSession();
   const result = await fetch(`http://localhost:3000/api/listings/${listingId}`);
   const { data } = await result.json();
