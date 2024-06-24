@@ -16,7 +16,7 @@ const authSlice = createSlice({
     wishlistToggle(state, action) {
       const { listingId } = action.payload;
       if (state?.user?.favoriteIds?.indexOf(listingId) != -1) {
-        state.user.favoriteIds = state.user.favoriteIds.filter((id) => id != listingId);
+        state.user.favoriteIds = state.user.favoriteIds.filter((id : string) => id != listingId);
       } else {
         state.user.favoriteIds.push(listingId);
       }
