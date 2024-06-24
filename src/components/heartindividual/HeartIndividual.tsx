@@ -17,7 +17,9 @@ const HeartIndividual = ({ houseId }: HeartIndividualProps) => {
 
   const addToWishListHandler = async () => {
     try {
-      const result = await axios.post(`/api/listings/${houseId}`, {
+      const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://renting-house-rho.vercel.app";
+
+      const result = await axios.post(url + `/api/listings/${houseId}`, {
         userId: userInfo.id as string,
       });
       toast.success(result.data.message);

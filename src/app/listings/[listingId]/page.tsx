@@ -1,12 +1,12 @@
 import HeartIndividual from "@/components/heartindividual/HeartIndividual";
 import Image from "next/image";
-import prisma from "@/lib/dbClient";
 import { categories } from "@/utils/categories";
 import { MapIndividulaListing } from "@/components/mapIndividulaListing/MapIndividulaListing";
 import ReservationCalendar from "@/components/reservation/ReservationCalendar";
 import { getSession } from "@/app/actions/GetCurrentUserState";
 import {Fragment} from "react";
 import { Metadata } from 'next';
+import getHosterInfo from "@/app/actions/getHosterInfo";
  
 
 export const metadata: Metadata = {
@@ -16,20 +16,21 @@ const page = async ({ params }: any) => {
   const { listingId } = params;
   
   const session = await getSession();
-  const result = await fetch(`/api/listings/${listingId}`);
+  const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://renting-house-rho.vercel.app";
+  const result = await fetch(url + `/api/listings/${listingId}`);
   const { data } = await result.json();
-  const userHosterInfo = await prisma.user.findUnique({
-    where: {
-      id: data.userId,
-    },
-    select: {
-      hashedPassword: false,
-      name: true,
-      image: true,
-      reservations: true,
-    },
-  });
-
+  // const userHosterInfo = await prisma.user.findUnique({
+  //   where: {
+  //     id: data.userId,
+  //   },
+  //   select: {
+  //     hashedPassword: false,
+  //     name: true,
+  //     image: true,
+  //     reservations: true,
+  //   },
+  // });
+  const userHosterInfo = await getHosterInfo(data);
   // disabledDates
 
   return (

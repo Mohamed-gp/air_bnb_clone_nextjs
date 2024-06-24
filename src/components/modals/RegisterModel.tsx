@@ -28,7 +28,8 @@ const RegisterModel = () => {
       return toast.error("password musn't be empty");
     }
     try {
-      const result = await axios.post("/api/auth/register", data);
+      const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://renting-house-rho.vercel.app";
+      const result = await axios.post(url + "/api/auth/register", data);
       toast.success(result.data.message, {
         style: {
           fontSize: "12px",
