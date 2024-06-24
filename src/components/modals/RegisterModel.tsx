@@ -28,7 +28,7 @@ const RegisterModel = () => {
       return toast.error("password musn't be empty");
     }
     try {
-      const url = process.env.NODE_ENV == "development" ? "http://localhost:3000" : "https://hoses-renting.vercel.app";
+      const url = process.env.NODE_ENV == "development" ? process.env.DEV_URL : process.env.DEP_URL;
       const result = await axios.post(url + "/api/auth/register", data);
       toast.success(result.data.message, {
         style: {
