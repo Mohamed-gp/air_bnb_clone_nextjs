@@ -11,6 +11,7 @@ const getHosterInfo = async (data: { userId: string }) => {
       name: true,
       image: true,
       reservations: true,
+      id: true
     },
   });
 };

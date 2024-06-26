@@ -66,6 +66,7 @@ export default function AuthMenu() {
                 </li>
                 <li
                   onClick={() => {
+              
                     signOut({ redirect: false });
                     dispatch(authActions.logout());
                     toast.success("Logged Out");

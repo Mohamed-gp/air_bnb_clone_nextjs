@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "@/redux/uiSlice/uiSlice";
 import { IRootState } from "@/redux/store";
 
-
 const RightHeader = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state:IRootState) => state.auth.user);
+  const user = useSelector((state: IRootState) => state.auth.user);
+
 
 
   return (
@@ -22,9 +22,7 @@ const RightHeader = () => {
           <FaBars />
           <div className="size-7 md:block hidden rounded-full overflow-hidden">
             <Image
-              src={
-                user?.image || `/images/placeholder.jpg`
-              }
+              src={user?.image || `/images/placeholder.jpg`}
               alt="profile-placeholder"
               width={30}
               height={30}
@@ -33,7 +31,6 @@ const RightHeader = () => {
           <AuthMenu />
         </div>
       </div>
-
     </>
   );
 };

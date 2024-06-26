@@ -3,35 +3,28 @@ import Image from "next/image";
 import { categories } from "@/utils/categories";
 import { MapIndividulaListing } from "@/components/mapIndividulaListing/MapIndividulaListing";
 import ReservationCalendar from "@/components/reservation/ReservationCalendar";
-import { getSession } from "@/app/actions/GetCurrentUserState";
-import {Fragment} from "react";
-import { Metadata } from 'next';
+import getCurrentUser, { getSession } from "@/app/actions/GetCurrentUserState";
+import { Fragment } from "react";
+import { Metadata } from "next";
 import getHosterInfo from "@/app/actions/getHosterInfo";
- 
 
 export const metadata: Metadata = {
-  title: 'Listing ',
+  title: "Listing ",
 };
 const page = async ({ params }: any) => {
   const { listingId } = params;
-  
   const session = await getSession();
-  const url = process.env.NODE_ENV == "development" ? process.env.DEV_URL : process.env.DEP_URL;
+  const url =
+    process.env.NODE_ENV == "development"
+      ? process.env.DEV_URL
+      : process.env.DEP_URL;
   const result = await fetch(url + `/api/listings/${listingId}`);
   const { data } = await result.json();
-  // const userHosterInfo = await prisma.user.findUnique({
-  //   where: {
-  //     id: data.userId,
-  //   },
-  //   select: {
-  //     hashedPassword: false,
-  //     name: true,
-  //     image: true,
-  //     reservations: true,
-  //   },
-  // });
+
   const userHosterInfo = await getHosterInfo(data);
-  // disabledDates
+  console.log(userHosterInfo);
+  const user = await getCurrentUser();
+  console.log(user);
 
   return (
     <div className="container my-12">
@@ -44,7 +37,14 @@ const page = async ({ params }: any) => {
           <div className="flex flex-col">
             <div className="flex gap-2 items-center">
               <p className="font-bold">Hosted By:</p>
-              <p className="font-semibold opacity-50">{userHosterInfo?.name}</p>
+              <p className="font-semibold opacity-50">
+                {userHosterInfo?.id == user?.id && "You"}
+                {userHosterInfo?.id != user?.id && `${userHosterInfo?.name}`}
+
+                {userHosterInfo?.id == user?.id && (
+                  <span> (You Can't Reserve Your House)</span>
+                )}
+              </p>
             </div>
             <div className="flex gap-4 items-center">
               <span className="opacity-50 font-semibold">
@@ -77,14 +77,14 @@ const page = async ({ params }: any) => {
           </div>
         </div>
       </div>
-      <div className="h-[350px] max-w-[600px] my-4 mx-auto relative rounded-3xl overflow-hidden cursor-pointer">
+      <div className="my-4 mx-auto relative rounded-3xl  cursor-pointer w-full h-[400px]">
         <Image
           src={data.imageSrc}
           alt={data.title}
           fill
           sizes="100%"
           quality={100}
-          className="rounded-3xl group-hover:scale-110 duration-500 w-auto h-auto object-cover"
+          className="rounded-3xl group-hover:scale-110 duration-500 w-full"
         />
         {session && <HeartIndividual houseId={data.id} />}
       </div>
@@ -105,10 +105,20 @@ const page = async ({ params }: any) => {
         );
       })}
 
-      <div className="my-16">
-        <MapIndividulaListing locationValue={data?.locationValue as string} />
+      <div className="flex my-16">
+        <MapIndividulaListing  locationValue={data?.locationValue as string} />
+        {user?.id != userHosterInfo?.id && (
+          <ReservationCalendar
+            userHosterInfo={userHosterInfo}
+            listingId={listingId}
+            price={data?.price}
+          />
+        )}
       </div>
-      <ReservationCalendar userHosterInfo={userHosterInfo?.name}/>
+      {/* this should be in the backend logic for the ui */}
+      {/* {!user && (<div>
+        <p className="text-center font-bold text-xl">Please Login to make a reservation</p>
+      </div>)} */}
     </div>
   );
 };
